@@ -5,6 +5,7 @@ import java.io.OutputStream;
 
 public class Sample {
 	public static void main(String[] args) throws Exception {
+		Integer val = Integer.valueOf(args[1]);
 		String bytes = //
 				"cafebabe" // magic number(cafe babe)
 						+ "0000" // minor version number of the class file format being used
@@ -12,8 +13,9 @@ public class Sample {
 						+ "001c" // Constant Pool Count(28)
 						// Constant Pool --->
 						+ "0a0006000f" // #1(0a = Method Ref #6, #15 "java/lang/Object" "<init>" "()V")
-						+ "0900100011" // #2(09 = Field reference #16, #17 "java/lang/Stream" "out" "Ljava/io/PrintStream;")
-						+ "030133efb6" // #3(03 = Integer 20180918)
+						+ "0900100011" // #2(09 = Field reference #16, #17 "java/lang/Stream" "out"
+										// "Ljava/io/PrintStream;")
+						+ "03" + String.format("%08x", val) // #3(03 = Integer 20180918)
 						+ "0a00120013" // #4(0a = Method Ref #18, #19 "java/io/PrintStream" "println" "(I)V")
 						+ "070014" // #5(07 = Class reference #20 "javawocc/HelloWorld")
 						+ "070015" // #6(07 = Class reference #21 "java/lang/Stream")
@@ -58,10 +60,10 @@ public class Sample {
 						+ "0001" // max_stack
 						+ "0001" // max_locals
 						+ "00000005" // code_length
-						//code
+						// code
 						+ "2a" // aload_0
 						+ "b7" + "0001" // invokespecial #1
-						+ "b1" // return 
+						+ "b1" // return
 						// code
 						+ "0000" // exception_table_length
 						+ "0001" // attribute_count
@@ -84,7 +86,7 @@ public class Sample {
 						// code
 						+ "b2" + "0002" // getstatic #2
 						+ "12" + "03" // ldc #3
-						+ "b6" + "0004" // invokevirtual #4 
+						+ "b6" + "0004" // invokevirtual #4
 						+ "b1" // return
 						// code
 						+ "0000" // exception_table_length
