@@ -2,7 +2,7 @@ package javawocc.constant;
 
 public class Constant {
 	private int index;
-	private String content;
+	protected String content;
 	
 	public Constant(String content) {
 		super();
