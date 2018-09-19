@@ -5,17 +5,20 @@ import java.io.OutputStream;
 
 public class Sample {
 	public static void main(String[] args) throws Exception {
-		Integer val = Integer.valueOf(args[1]);
+		int a = 23456;
+		int b = Integer.valueOf(args[1]);
+		int c = Integer.valueOf(args[2]);
+		int cpcnt = 28;
 		String bytes = //
 				"cafebabe" // magic number(cafe babe)
 						+ "0000" // minor version number of the class file format being used
 						+ "0034" // major version number of the class file format being used.(Java SE 8 = 0x34)
-						+ "001c" // Constant Pool Count(28)
+						+ String.format("%04x", cpcnt) // Constant Pool Count(29)
 						// Constant Pool --->
 						+ "0a0006000f" // #1(0a = Method Ref #6, #15 "java/lang/Object" "<init>" "()V")
 						+ "0900100011" // #2(09 = Field reference #16, #17 "java/lang/Stream" "out"
 										// "Ljava/io/PrintStream;")
-						+ "03" + String.format("%08x", val) // #3(03 = Integer 20180918)
+						+ "03" + String.format("%08x", a) // #3(03 = Integer 20180918)
 						+ "0a00120013" // #4(0a = Method Ref #18, #19 "java/io/PrintStream" "println" "(I)V")
 						+ "070014" // #5(07 = Class reference #20 "javawocc/HelloWorld")
 						+ "070015" // #6(07 = Class reference #21 "java/lang/Stream")
@@ -41,6 +44,7 @@ public class Sample {
 						+ "0100136a6176612f696f2f5072696e7453747265616d" // #25(01 = UTF-8 "java/io/PrintStream")
 						+ "0100077072696e746c6e" // #26(01 = UTF-8 "println")
 						+ "01000428492956" // #27(01 = UTF-8 "(I)V")
+
 						// ---> Constant Pool
 						+ "0021" // access flags, a bitmask
 						+ "0005" // this class #5
@@ -79,13 +83,15 @@ public class Sample {
 						+ "0001" // method[1] attributes_count
 						// method[1].attribute[0]
 						+ "0009" // attribute_name_index #9 (Code)
-						+ "00000025" // attribute_length
-						+ "0002" // max_stack
+						+ "0000002a" // attribute_length
+						+ "0003" // max_stack
 						+ "0001" // max_locals
-						+ "00000009" // code_length
+						+ "0000000e" // *code_length
 						// code
 						+ "b2" + "0002" // getstatic #2
-						+ "12" + "03" // ldc #3
+						+ "11" + String.format("%04x", b) // sipush b
+						+ "11" + String.format("%04x", c) // sipush c
+						+ "60" // iadd
 						+ "b6" + "0004" // invokevirtual #4
 						+ "b1" // return
 						// code
