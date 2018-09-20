@@ -2,12 +2,12 @@ package javawocc.constant;
 
 public class FieldRef extends Constant {
 	private ClassConstant clazz;
-	private UTF8Constant utf8;
+	private NameAndType nameAndType;
 
-	public FieldRef(ClassConstant clazz, UTF8Constant utf8) {
+	public FieldRef(ClassConstant clazz, NameAndType nameAndType) {
 		super();
 		this.clazz = clazz;
-		this.utf8 = utf8;
+		this.nameAndType = nameAndType;
 	}
 
 	@Override
@@ -15,7 +15,7 @@ public class FieldRef extends Constant {
 		StringBuilder sb = new StringBuilder();
 		sb.append("09"); // type
 		sb.append(String.format("%04x", clazz.getIndex()));
-		sb.append(String.format("%04x", utf8.getIndex()));
+		sb.append(String.format("%04x", nameAndType.getIndex()));
 		return sb.toString();
 	}
 }
