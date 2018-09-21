@@ -10,6 +10,7 @@ import javawocc.constant.MethodRef;
 import javawocc.constant.NameAndType;
 import javawocc.constant.UTF8Constant;
 import javawocc.model.ConstantPool;
+import javawocc.model.MessageInfoBuilder;
 import javawocc.model.MethodInfo;
 
 public class Sample {
@@ -23,6 +24,7 @@ public class Sample {
 		UTF8Constant u4 = new UTF8Constant("java/io/PrintStream");
 		UTF8Constant u7 = new UTF8Constant("<init>");
 		UTF8Constant u8 = new UTF8Constant("()V");
+		UTF8Constant u9 = new UTF8Constant("Code");
 		UTF8Constant u10 = new UTF8Constant("LineNumberTable");
 		UTF8Constant u23 = new UTF8Constant("out");
 		UTF8Constant u24 = new UTF8Constant("Ljava/io/PrintStream;");
@@ -48,7 +50,7 @@ public class Sample {
 
 		cp.addConstant(u7); // #7(01 = UTF-8 "<init>")
 		cp.addConstant(u8); // #8(01 = UTF-8 "()V")
-		cp.addConstant(new UTF8Constant("Code")); // #9(01 = UTF-8 "Code")
+		cp.addConstant(u9); // #9(01 = UTF-8 "Code")
 		cp.addConstant(u10); // #10(01 = UTF-8 "LineNumberTable")
 		cp.addConstant(new UTF8Constant("main")); // #11(01 = UTF-8 "main")
 		cp.addConstant(new UTF8Constant("([Ljava/lang/String;)V")); // #12(01 = UTF-8 "([Ljava/lang/String;)V")
@@ -81,9 +83,11 @@ public class Sample {
 						+ "0000" // field count = 0
 						+ "0002"; // method count = 2
 
-		MethodInfo method0 = MethodInfo.createMethod0(u7, u8, u10);
+		MessageInfoBuilder builder = new MessageInfoBuilder(u9, u10);
+
+		MethodInfo method0 = builder.createMethod0(u7, u8, u9, u10);
 		bytes += method0.toString();
-		MethodInfo method1 = MethodInfo.createMethod1(b, c);
+		MethodInfo method1 = builder.createMethod1(b, c);
 		bytes += method1.toString();
 		bytes +=
 
