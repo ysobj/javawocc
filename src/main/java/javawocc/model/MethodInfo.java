@@ -2,6 +2,8 @@ package javawocc.model;
 
 import java.util.List;
 
+import javawocc.constant.Constant;
+
 public class MethodInfo {
 	public String accessFlags;
 	public String nameIndex;
@@ -15,11 +17,11 @@ public class MethodInfo {
 		return content;
 	}
 
-	public static MethodInfo createMethod0() {
+	public static MethodInfo createMethod0(Constant name, Constant descriptor, Constant lineNumberTable) {
 		// method[0]-->
 		String content = "0001" // method[0] access_flag
-				+ "0007" // method[0] name_index
-				+ "0008" // method[0] descriptor_index
+				+ String.format("%04x", name.getIndex()) // method[0] name_index
+				+ String.format("%04x", descriptor.getIndex()) // method[0] descriptor_index
 				+ "0001" // method[0] attributes_count
 				// method[0].attribute[0]
 				// https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.3
@@ -35,7 +37,7 @@ public class MethodInfo {
 				// code
 				+ "0000" // exception_table_length
 				+ "0001" // attribute_count
-				+ "000a" // attribute_name_index #10 (LineNumberTable)
+				+ String.format("%04x", lineNumberTable.getIndex()) // attribute_name_index #10 (LineNumberTable)
 				+ "00000006" // attribute_length
 				+ "0001" // line_number_table_length
 				+ "0000" // start_pc[0]

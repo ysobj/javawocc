@@ -23,6 +23,7 @@ public class Sample {
 		UTF8Constant u4 = new UTF8Constant("java/io/PrintStream");
 		UTF8Constant u7 = new UTF8Constant("<init>");
 		UTF8Constant u8 = new UTF8Constant("()V");
+		UTF8Constant u10 = new UTF8Constant("LineNumberTable");
 		UTF8Constant u23 = new UTF8Constant("out");
 		UTF8Constant u24 = new UTF8Constant("Ljava/io/PrintStream;");
 		UTF8Constant u26 = new UTF8Constant("println");
@@ -48,7 +49,7 @@ public class Sample {
 		cp.addConstant(u7); // #7(01 = UTF-8 "<init>")
 		cp.addConstant(u8); // #8(01 = UTF-8 "()V")
 		cp.addConstant(new UTF8Constant("Code")); // #9(01 = UTF-8 "Code")
-		cp.addConstant(new UTF8Constant("LineNumberTable")); // #10(01 = UTF-8 "LineNumberTable")
+		cp.addConstant(u10); // #10(01 = UTF-8 "LineNumberTable")
 		cp.addConstant(new UTF8Constant("main")); // #11(01 = UTF-8 "main")
 		cp.addConstant(new UTF8Constant("([Ljava/lang/String;)V")); // #12(01 = UTF-8 "([Ljava/lang/String;)V")
 		cp.addConstant(new UTF8Constant("SourceFile"));// #13(01 = UTF-8 "SourceFile")
@@ -80,7 +81,7 @@ public class Sample {
 						+ "0000" // field count = 0
 						+ "0002"; // method count = 2
 
-		MethodInfo method0 = MethodInfo.createMethod0();
+		MethodInfo method0 = MethodInfo.createMethod0(u7, u8, u10);
 		bytes += method0.toString();
 		MethodInfo method1 = MethodInfo.createMethod1(b, c);
 		bytes += method1.toString();
