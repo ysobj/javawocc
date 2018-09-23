@@ -26,6 +26,7 @@ public class Sample {
 		UTF8Constant u8 = new UTF8Constant("()V");
 		UTF8Constant u9 = new UTF8Constant("Code");
 		UTF8Constant u10 = new UTF8Constant("LineNumberTable");
+		UTF8Constant u13 = new UTF8Constant("SourceFile");
 		UTF8Constant u23 = new UTF8Constant("out");
 		UTF8Constant u24 = new UTF8Constant("Ljava/io/PrintStream;");
 		UTF8Constant u26 = new UTF8Constant("println");
@@ -38,7 +39,8 @@ public class Sample {
 		NameAndType nt1 = new NameAndType(u7, u8);
 		NameAndType nt2 = new NameAndType(u26, u27);
 		NameAndType nt3 = new NameAndType(u23, u24);
-		cp.addConstant(new MethodRef(c1, nt1)); // #1(0a = Method Ref #6, #15 "java/lang/Object" "<init>" "()V")
+		MethodRef m1 = new MethodRef(c1, nt1);
+		cp.addConstant(m1); // #1(0a = Method Ref #6, #15 "java/lang/Object" "<init>" "()V")
 
 		cp.addConstant(new FieldRef(c3, nt3)); // #2(09 = Field reference #16, #17 "java/lang/Stream" "out"
 		// "Ljava/io/PrintStream;")
@@ -54,7 +56,7 @@ public class Sample {
 		cp.addConstant(u10); // #10(01 = UTF-8 "LineNumberTable")
 		cp.addConstant(new UTF8Constant("main")); // #11(01 = UTF-8 "main")
 		cp.addConstant(new UTF8Constant("([Ljava/lang/String;)V")); // #12(01 = UTF-8 "([Ljava/lang/String;)V")
-		cp.addConstant(new UTF8Constant("SourceFile"));// #13(01 = UTF-8 "SourceFile")
+		cp.addConstant(u13);// #13(01 = UTF-8 "SourceFile")
 		cp.addConstant(new UTF8Constant("HelloWorld.java")); // #14(01 = UTF-8 "HelloWorld.java")
 		cp.addConstant(nt1); // #15(0c = Name and Type #7, #8 "<init>" "()V")
 		cp.addConstant(c3); // #16(07 = Class reference #22 "java/lang/System")
@@ -85,7 +87,7 @@ public class Sample {
 
 		MessageInfoBuilder builder = new MessageInfoBuilder(u9, u10);
 
-		MethodInfo method0 = builder.createMethod0(u7, u8, u9, u10);
+		MethodInfo method0 = builder.createMethod0(u7, u8, u9, m1);
 		bytes += method0.toString();
 		MethodInfo method1 = builder.createMethod1(b, c);
 		bytes += method1.toString();
@@ -93,7 +95,7 @@ public class Sample {
 
 				//
 				"0001" // attribute_count
-						+ "000d" // attribute_name_index
+						+ String.format("%04x", u13.getIndex()) // attribute_name_index
 						+ "00000002" // attribute_length
 						+ "000e";// info[2]
 		OutputStream os = new FileOutputStream(args[0] + "/javawocc/HelloWorld.class");

@@ -1,16 +1,17 @@
 package javawocc.model;
 
 import javawocc.constant.Constant;
+import javawocc.constant.MethodRef;
 import javawocc.constant.UTF8Constant;
 
 public class MessageInfoBuilder {
 	private UTF8Constant code;
-	private UTF8Constant lineNumberTable;
+	private UTF8Constant lineNumberTableConst;
 
 	public MessageInfoBuilder(UTF8Constant code, UTF8Constant lineNumberTable) {
 		super();
 		this.code = code;
-		this.lineNumberTable = lineNumberTable;
+		this.lineNumberTableConst = lineNumberTable;
 	}
 
 	public MethodInfo build() {
@@ -18,7 +19,7 @@ public class MessageInfoBuilder {
 		return methodInfo;
 	}
 
-	public MethodInfo createMethod0(Constant name, Constant descriptor, Constant code, Constant lineNumberTable) {
+	public MethodInfo createMethod0(Constant name, Constant descriptor, Constant code, MethodRef m1) {
 		// method[0]-->
 		String content = "0001" // method[0] access_flag
 				+ String.format("%04x", name.getIndex()) // method[0] name_index
@@ -33,18 +34,16 @@ public class MessageInfoBuilder {
 				+ "00000005" // code_length
 				// code
 				+ "2a" // aload_0
-				+ "b7" + "0001" // invokespecial #1
+				+ "b7" + String.format("%04x", m1.getIndex()) // invokespecial #1
 				+ "b1" // return
 				// code
 				+ "0000" // exception_table_length
-				+ "0001" // attribute_count
-				+ String.format("%04x", lineNumberTable.getIndex()) // attribute_name_index #10 (LineNumberTable)
-				+ "00000006" // attribute_length
-				+ "0001" // line_number_table_length
-				+ "0000" // start_pc[0]
-				+ "0002"; // line_number[0]
+				+ "0001"; // attribute_count
+		LineNumberTableAttributeInfo lineNumberTable = new LineNumberTableAttributeInfo(lineNumberTableConst);
+		lineNumberTable.add("0000", "0002");
+
 		MethodInfo method = new MethodInfo();
-		method.content = content;
+		method.content = content + lineNumberTable.toString();
 		return method;
 	}
 
@@ -68,16 +67,13 @@ public class MessageInfoBuilder {
 				+ "b1" // return
 				// code
 				+ "0000" // exception_table_length
-				+ "0001" // attribute_count
-				+ "000a" // attribute_name_index #10 (LineNumberTable)
-				+ "0000000a" // attribute_length
-				+ "0002" // line_number_table_length
-				+ "0000" // start_pc[0]
-				+ "0004" // line_number[0]
-				+ "0008" // start_pc[1]
-				+ "0005"; // line_number[1]
+				+ "0001"; // attribute_count
+		//
+		LineNumberTableAttributeInfo lineNumberTable = new LineNumberTableAttributeInfo(lineNumberTableConst);
+		lineNumberTable.add("0000", "0004");
+		lineNumberTable.add("0008", "0005");
 		MethodInfo method = new MethodInfo();
-		method.content = content;
+		method.content = content + lineNumberTable.toString();
 		return method;
 	}
 }

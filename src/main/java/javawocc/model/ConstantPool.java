@@ -18,8 +18,9 @@ public class ConstantPool {
 		return sb.toString();
 	}
 
-	public void addConstant(Constant constant) {
+	public <T extends Constant> T addConstant(T constant) {
 		constant.setIndex(constants.size() + 1);
 		constants.add(constant);
+		return constant;
 	}
 }

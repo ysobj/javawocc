@@ -1,6 +1,12 @@
 package javawocc.model;
 
+import javawocc.constant.UTF8Constant;
+
 public class CodeAttributeInfo extends AttributeInfo {
+
+	public CodeAttributeInfo(UTF8Constant attributeName) {
+		super(attributeName);
+	}
 	// u2 attribute_name_index;
 	// u4 attribute_length;
 	// u2 max_stack;
