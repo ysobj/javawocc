@@ -87,7 +87,7 @@ public class Sample {
 
 		MessageInfoBuilder builder = new MessageInfoBuilder(u9, u10);
 
-		MethodInfo method0 = builder.createMethod0(u7, u8, u9, m1);
+		MethodInfo method0 = builder.createMethod0(u7, u8, m1);
 		bytes += method0.toString();
 		MethodInfo method1 = builder.createMethod1(b, c);
 		bytes += method1.toString();

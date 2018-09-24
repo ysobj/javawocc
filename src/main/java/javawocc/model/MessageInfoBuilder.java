@@ -19,31 +19,25 @@ public class MessageInfoBuilder {
 		return methodInfo;
 	}
 
-	public MethodInfo createMethod0(Constant name, Constant descriptor, Constant code, MethodRef m1) {
+	public MethodInfo createMethod0(Constant name, Constant descriptor, MethodRef m1) {
 		// method[0]-->
 		String content = "0001" // method[0] access_flag
 				+ String.format("%04x", name.getIndex()) // method[0] name_index
 				+ String.format("%04x", descriptor.getIndex()) // method[0] descriptor_index
-				+ "0001" // method[0] attributes_count
-				// method[0].attribute[0]
-				// https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.3
-				+ String.format("%04x", code.getIndex()) // attribute_name_index #9 (Code)
-				+ "0000001d" // attribute_length
-				+ "0001" // max_stack
-				+ "0001" // max_locals
-				+ "00000005" // code_length
-				// code
-				+ "2a" // aload_0
-				+ "b7" + String.format("%04x", m1.getIndex()) // invokespecial #1
-				+ "b1" // return
-				// code
-				+ "0000" // exception_table_length
-				+ "0001"; // attribute_count
+				+ "0001"; // method[0] attributes_count
+		// method[0].attribute[0]
+		// https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.7.3
+
+		CodeAttributeInfo codeAttribute = new CodeAttributeInfo(code);
+		codeAttribute.setMaxStack(1);
+		codeAttribute.setMaxLocals(1);
+		codeAttribute.setCode("2ab7" + String.format("%04x", m1.getIndex()) + "b1");
 		LineNumberTableAttributeInfo lineNumberTable = new LineNumberTableAttributeInfo(lineNumberTableConst);
 		lineNumberTable.add("0000", "0002");
+		codeAttribute.addAttribute(lineNumberTable);
 
 		MethodInfo method = new MethodInfo();
-		method.content = content + lineNumberTable.toString();
+		method.content = content + codeAttribute.toString();
 		return method;
 	}
 
@@ -53,6 +47,7 @@ public class MessageInfoBuilder {
 				+ "000c" // method[1] descriptor_index
 				+ "0001" // method[1] attributes_count
 				// method[1].attribute[0]
+
 				+ "0009" // attribute_name_index #9 (Code)
 				+ "0000002a" // attribute_length
 				+ "0003" // max_stack

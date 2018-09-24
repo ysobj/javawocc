@@ -2,13 +2,13 @@ package javawocc.model;
 
 import javawocc.constant.UTF8Constant;
 
-public class LineNumberTableAttributeInfo {
+public class LineNumberTableAttributeInfo extends AttributeInfo {
 	private UTF8Constant name;
 	private StringBuilder sb;
 	private int lineNumberTableLength;
 
 	public LineNumberTableAttributeInfo(UTF8Constant name) {
-		super();
+		super(name);
 		this.name = name;
 		this.sb = new StringBuilder();
 	}

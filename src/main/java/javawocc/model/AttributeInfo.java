@@ -6,7 +6,7 @@ public class AttributeInfo {
 	// u2 attribute_name_index;
 	// u4 attribute_length;
 	// u1 info[attribute_length];
-	UTF8Constant attributeName;
+	protected UTF8Constant attributeName;
 
 	public AttributeInfo(UTF8Constant attributeName) {
 		super();
