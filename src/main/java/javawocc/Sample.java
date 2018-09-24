@@ -12,6 +12,7 @@ import javawocc.constant.UTF8Constant;
 import javawocc.model.ConstantPool;
 import javawocc.model.MessageInfoBuilder;
 import javawocc.model.MethodInfo;
+import javawocc.model.SourceFileAttribute;
 
 public class Sample {
 	public static void main(String[] args) throws Exception {
@@ -27,6 +28,7 @@ public class Sample {
 		UTF8Constant u9 = new UTF8Constant("Code");
 		UTF8Constant u10 = new UTF8Constant("LineNumberTable");
 		UTF8Constant u13 = new UTF8Constant("SourceFile");
+		UTF8Constant u14 = new UTF8Constant("HelloWorld.java");
 		UTF8Constant u23 = new UTF8Constant("out");
 		UTF8Constant u24 = new UTF8Constant("Ljava/io/PrintStream;");
 		UTF8Constant u26 = new UTF8Constant("println");
@@ -57,7 +59,7 @@ public class Sample {
 		cp.addConstant(new UTF8Constant("main")); // #11(01 = UTF-8 "main")
 		cp.addConstant(new UTF8Constant("([Ljava/lang/String;)V")); // #12(01 = UTF-8 "([Ljava/lang/String;)V")
 		cp.addConstant(u13);// #13(01 = UTF-8 "SourceFile")
-		cp.addConstant(new UTF8Constant("HelloWorld.java")); // #14(01 = UTF-8 "HelloWorld.java")
+		cp.addConstant(u14); // #14(01 = UTF-8 "HelloWorld.java")
 		cp.addConstant(nt1); // #15(0c = Name and Type #7, #8 "<init>" "()V")
 		cp.addConstant(c3); // #16(07 = Class reference #22 "java/lang/System")
 		cp.addConstant(nt3); // #17(0c = Name and Type #23, #24 "out" "Ljava/io/PrintStream;")
@@ -94,10 +96,10 @@ public class Sample {
 		bytes +=
 
 				//
-				"0001" // attribute_count
-						+ String.format("%04x", u13.getIndex()) // attribute_name_index
-						+ "00000002" // attribute_length
-						+ "000e";// info[2]
+				"0001"; // attribute_count
+		SourceFileAttribute sourceFileAttribute = new SourceFileAttribute(u13);
+		sourceFileAttribute.setSourceFileConstant(u14);
+		bytes += sourceFileAttribute.toString();
 		OutputStream os = new FileOutputStream(args[0] + "/javawocc/HelloWorld.class");
 		os.write(decode(bytes));
 		os.close();
