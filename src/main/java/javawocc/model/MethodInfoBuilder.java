@@ -4,11 +4,11 @@ import javawocc.constant.Constant;
 import javawocc.constant.MethodRef;
 import javawocc.constant.UTF8Constant;
 
-public class MessageInfoBuilder {
+public class MethodInfoBuilder {
 	private UTF8Constant code;
 	private UTF8Constant lineNumberTableConst;
 
-	public MessageInfoBuilder(UTF8Constant code, UTF8Constant lineNumberTable) {
+	public MethodInfoBuilder(UTF8Constant code, UTF8Constant lineNumberTable) {
 		super();
 		this.code = code;
 		this.lineNumberTableConst = lineNumberTable;

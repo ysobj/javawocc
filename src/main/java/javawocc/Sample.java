@@ -10,7 +10,7 @@ import javawocc.constant.MethodRef;
 import javawocc.constant.NameAndType;
 import javawocc.constant.UTF8Constant;
 import javawocc.model.ConstantPool;
-import javawocc.model.MessageInfoBuilder;
+import javawocc.model.MethodInfoBuilder;
 import javawocc.model.MethodInfo;
 import javawocc.model.SourceFileAttribute;
 
@@ -87,7 +87,7 @@ public class Sample {
 						+ "0000" // field count = 0
 						+ "0002"; // method count = 2
 
-		MessageInfoBuilder builder = new MessageInfoBuilder(u9, u10);
+		MethodInfoBuilder builder = new MethodInfoBuilder(u9, u10);
 
 		MethodInfo method0 = builder.createMethod0(u7, u8, m1);
 		bytes += method0.toString();
