@@ -42,7 +42,7 @@ public class MethodInfoBuilder {
 		return method;
 	}
 
-	public MethodInfo createMethod1(Constant name, Constant descriptor, int b, int c, FieldRef f1, MethodRef m2) {
+	public MethodInfo createMethod1(Constant name, Constant descriptor, String statement, FieldRef f1, MethodRef m2) {
 		String content = "0009" // method[1] access_flag
 				+ String.format("%04x", name.getIndex()) // method[0] name_index
 				+ String.format("%04x", descriptor.getIndex()) // method[0] descriptor_index
@@ -54,10 +54,7 @@ public class MethodInfoBuilder {
 		codeAttribute.setMaxLocals(1);
 		codeAttribute.setCode( //
 				"b2" + String.format("%04x", f1.getIndex()) // getstatic #2
-						+ "11" + String.format("%04x", b) // sipush b
-						+ "11" + String.format("%04x", c) // sipush c
-						+ "60" // iadd
-						+ "b6" + String.format("%04x", m2.getIndex()) // invokevirtual #4
+						+ convertStatement(statement) + "b6" + String.format("%04x", m2.getIndex()) // invokevirtual #4
 						+ "b1");
 		LineNumberTableAttributeInfo lineNumberTable = new LineNumberTableAttributeInfo(lineNumberTableConst);
 		lineNumberTable.add("0000", "0004");
@@ -66,5 +63,11 @@ public class MethodInfoBuilder {
 		MethodInfo method = new MethodInfo();
 		method.content = content + codeAttribute.toString();
 		return method;
+	}
+
+	protected String convertStatement(String statement) {
+		String[] tmp = statement.split(" ");
+		return "11" + String.format("%04x", Integer.valueOf(tmp[0])) + "11"
+				+ String.format("%04x", Integer.valueOf(tmp[2])) + ("+".equals(tmp[1]) ? "60" : "64");
 	}
 }

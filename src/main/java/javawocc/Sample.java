@@ -15,8 +15,7 @@ import javawocc.model.SourceFileAttribute;
 
 public class Sample {
 	public static void main(String[] args) throws Exception {
-		int b = Integer.valueOf(args[1]);
-		int c = Integer.valueOf(args[2]);
+		String statement = args[1];
 		ConstantPool cp = new ConstantPool();
 		UTF8Constant u1 = new UTF8Constant("javawocc/HelloWorld");
 		UTF8Constant u2 = new UTF8Constant("java/lang/Object");
@@ -95,7 +94,7 @@ public class Sample {
 
 		MethodInfo method0 = builder.createMethod0(u7, u8, m1);
 		bytes += method0.toString();
-		MethodInfo method1 = builder.createMethod1(u11, u12, b, c, f1, m2);
+		MethodInfo method1 = builder.createMethod1(u11, u12, statement, f1, m2);
 		bytes += method1.toString();
 		bytes +=
 
