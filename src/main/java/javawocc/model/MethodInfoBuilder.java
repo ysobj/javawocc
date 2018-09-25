@@ -1,6 +1,7 @@
 package javawocc.model;
 
 import javawocc.constant.Constant;
+import javawocc.constant.FieldRef;
 import javawocc.constant.MethodRef;
 import javawocc.constant.UTF8Constant;
 
@@ -41,34 +42,29 @@ public class MethodInfoBuilder {
 		return method;
 	}
 
-	public MethodInfo createMethod1(int b, int c) {
+	public MethodInfo createMethod1(Constant name, Constant descriptor, int b, int c, FieldRef f1, MethodRef m2) {
 		String content = "0009" // method[1] access_flag
-				+ "000b" // method[1] name_index
-				+ "000c" // method[1] descriptor_index
-				+ "0001" // method[1] attributes_count
-				// method[1].attribute[0]
+				+ String.format("%04x", name.getIndex()) // method[0] name_index
+				+ String.format("%04x", descriptor.getIndex()) // method[0] descriptor_index
+				+ "0001"; // method[1] attributes_count
+		// method[1].attribute[0]
 
-				+ "0009" // attribute_name_index #9 (Code)
-				+ "0000002a" // attribute_length
-				+ "0003" // max_stack
-				+ "0001" // max_locals
-				+ "0000000e" // *code_length
-				// code
-				+ "b2" + "0002" // getstatic #2
-				+ "11" + String.format("%04x", b) // sipush b
-				+ "11" + String.format("%04x", c) // sipush c
-				+ "60" // iadd
-				+ "b6" + "0004" // invokevirtual #4
-				+ "b1" // return
-				// code
-				+ "0000" // exception_table_length
-				+ "0001"; // attribute_count
-		//
+		CodeAttributeInfo codeAttribute = new CodeAttributeInfo(code);
+		codeAttribute.setMaxStack(3);
+		codeAttribute.setMaxLocals(1);
+		codeAttribute.setCode( //
+				"b2" + String.format("%04x", f1.getIndex()) // getstatic #2
+						+ "11" + String.format("%04x", b) // sipush b
+						+ "11" + String.format("%04x", c) // sipush c
+						+ "60" // iadd
+						+ "b6" + String.format("%04x", m2.getIndex()) // invokevirtual #4
+						+ "b1");
 		LineNumberTableAttributeInfo lineNumberTable = new LineNumberTableAttributeInfo(lineNumberTableConst);
 		lineNumberTable.add("0000", "0004");
 		lineNumberTable.add("0008", "0005");
+		codeAttribute.addAttribute(lineNumberTable);
 		MethodInfo method = new MethodInfo();
-		method.content = content + lineNumberTable.toString();
+		method.content = content + codeAttribute.toString();
 		return method;
 	}
 }
