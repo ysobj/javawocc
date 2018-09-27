@@ -24,4 +24,14 @@ class ASTNodeTest {
 		assertEquals("11007b1100ea60", target.compile());
 		assertEquals("1100ea11007b64", target2.compile());
 	}
+
+	@Test
+	void testBinaryExpression2() {
+		NumberLiteral left = new NumberLiteral("123");
+		NumberLiteral right = new NumberLiteral("234");
+		BinaryExpression target = new BinaryExpression(left, "+", right);
+		NumberLiteral rr = new NumberLiteral("321");
+		BinaryExpression target2 = new BinaryExpression(target, "-", rr);
+		assertEquals(36, target2.evaluate());
+	}
 }

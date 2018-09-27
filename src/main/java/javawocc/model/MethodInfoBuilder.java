@@ -1,5 +1,7 @@
 package javawocc.model;
 
+import javawocc.ast.BinaryExpression;
+import javawocc.ast.NumberLiteral;
 import javawocc.constant.Constant;
 import javawocc.constant.FieldRef;
 import javawocc.constant.MethodRef;
@@ -67,7 +69,11 @@ public class MethodInfoBuilder {
 
 	protected String convertStatement(String statement) {
 		String[] tmp = statement.split(" ");
-		return "11" + String.format("%04x", Integer.valueOf(tmp[0])) + "11"
-				+ String.format("%04x", Integer.valueOf(tmp[2])) + ("+".equals(tmp[1]) ? "60" : "64");
+		NumberLiteral left = new NumberLiteral(tmp[0]);
+		NumberLiteral right = new NumberLiteral(tmp[2]);
+		BinaryExpression expression = new BinaryExpression(left, tmp[1], right);
+		NumberLiteral rr = new NumberLiteral("321");
+		BinaryExpression expression2 = new BinaryExpression(expression, "-", rr);
+		return expression2.compile();
 	}
 }
