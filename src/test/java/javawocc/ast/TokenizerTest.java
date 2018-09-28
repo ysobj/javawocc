@@ -1,0 +1,38 @@
+package javawocc.ast;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import javawocc.tokenizer.Token;
+import javawocc.tokenizer.Token.TokenType;
+import javawocc.tokenizer.Tokenizer;
+
+class TokenizerTest {
+
+	@Test
+	void testSimpleCase() {
+		Tokenizer tokenizer = new Tokenizer("1234 + 5678");
+		// 
+		assertTrue(tokenizer.hasNext());
+		Token token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("1234", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("+", token.getOriginal());
+		assertEquals(TokenType.OPERATOR, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("5678", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
+		//
+		assertFalse(tokenizer.hasNext());
+	}
+
+}
