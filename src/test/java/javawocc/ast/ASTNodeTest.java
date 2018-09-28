@@ -34,4 +34,18 @@ class ASTNodeTest {
 		BinaryExpression target2 = new BinaryExpression(target, "-", rr);
 		assertEquals(36, target2.evaluate());
 	}
+
+	@Test
+	void testBinaryExpressionOperators() {
+		NumberLiteral left = new NumberLiteral("9");
+		NumberLiteral right = new NumberLiteral("3");
+		BinaryExpression plus = new BinaryExpression(left, "+", right);
+		assertEquals(12, plus.evaluate());
+		BinaryExpression minus = new BinaryExpression(left, "-", right);
+		assertEquals(6, minus.evaluate());
+		BinaryExpression mul = new BinaryExpression(left, "*", right);
+		assertEquals(27, mul.evaluate());
+		BinaryExpression div = new BinaryExpression(left, "/", right);
+		assertEquals(3, div.evaluate());
+	}
 }

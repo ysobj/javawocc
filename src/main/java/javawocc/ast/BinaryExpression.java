@@ -3,12 +3,28 @@ package javawocc.ast;
 public class BinaryExpression extends ASTNode {
 	private ASTNode left;
 	private ASTNode right;
-	private String operator;
+	private Operator operator;
 
 	public BinaryExpression(ASTNode left, String operator, ASTNode right) {
 		super();
 		this.left = left;
-		this.operator = operator;
+		switch (operator) {
+		case "+":
+			this.operator = new PlusOperator();
+			break;
+		case "-":
+			this.operator = new MinusOperator();
+			break;
+		case "*":
+			this.operator = new MultiplyOperator();
+			break;
+		case "/":
+			this.operator = new DivideOperator();
+			break;
+
+		default:
+			break;
+		}
 		this.right = right;
 	}
 
@@ -16,12 +32,7 @@ public class BinaryExpression extends ASTNode {
 	public Object evaluate() {
 		Integer lvalue = (Integer) left.evaluate();
 		Integer rvalue = (Integer) right.evaluate();
-		if ("+".equals(operator)) {
-			return lvalue + rvalue;
-		} else if ("-".equals(operator)) {
-			return lvalue - rvalue;
-		}
-		return null;
+		return operator.evaluate(lvalue, rvalue);
 	}
 
 	@Override
@@ -31,12 +42,69 @@ public class BinaryExpression extends ASTNode {
 		sb.append(String.format("%04x", left.evaluate()));
 		sb.append("11"); // sipush
 		sb.append(String.format("%04x", right.evaluate()));
-		if ("+".equals(operator)) {
-			sb.append("60");
-		} else if ("-".equals(operator)) {
-			sb.append("64");
-		}
+		sb.append(operator.compile());
 		return sb.toString();
 	}
 
+	private interface Operator {
+		Object evaluate(Integer lvalue, Integer rvalue);
+
+		String compile();
+	}
+
+	private class PlusOperator implements Operator {
+
+		@Override
+		public Object evaluate(Integer lvalue, Integer rvalue) {
+			return lvalue + rvalue;
+		}
+
+		@Override
+		public String compile() {
+			return "60";
+		}
+
+	}
+
+	private class MinusOperator implements Operator {
+
+		@Override
+		public Object evaluate(Integer lvalue, Integer rvalue) {
+			return lvalue - rvalue;
+		}
+
+		@Override
+		public String compile() {
+			return "64";
+		}
+
+	}
+
+	private class DivideOperator implements Operator {
+
+		@Override
+		public Object evaluate(Integer lvalue, Integer rvalue) {
+			return lvalue / rvalue;
+		}
+
+		@Override
+		public String compile() {
+			return "6c";
+		}
+
+	}
+
+	private class MultiplyOperator implements Operator {
+
+		@Override
+		public Object evaluate(Integer lvalue, Integer rvalue) {
+			return lvalue * rvalue;
+		}
+
+		@Override
+		public String compile() {
+			return "68";
+		}
+
+	}
 }
