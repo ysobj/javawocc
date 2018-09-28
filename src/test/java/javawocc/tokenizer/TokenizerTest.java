@@ -1,4 +1,4 @@
-package javawocc.ast;
+package javawocc.tokenizer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
