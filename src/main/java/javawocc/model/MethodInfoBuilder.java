@@ -2,6 +2,7 @@ package javawocc.model;
 
 import javawocc.ast.BinaryExpression;
 import javawocc.ast.NumberLiteral;
+import javawocc.ast.OperatorNode;
 import javawocc.constant.Constant;
 import javawocc.constant.FieldRef;
 import javawocc.constant.MethodRef;
@@ -71,9 +72,9 @@ public class MethodInfoBuilder {
 		String[] tmp = statement.split(" ");
 		NumberLiteral left = new NumberLiteral(tmp[0]);
 		NumberLiteral right = new NumberLiteral(tmp[2]);
-		BinaryExpression expression = new BinaryExpression(left, tmp[1], right);
+		BinaryExpression expression = new BinaryExpression(left, new OperatorNode(tmp[1]), right);
 		NumberLiteral rr = new NumberLiteral("321");
-		BinaryExpression expression2 = new BinaryExpression(expression, "-", rr);
+		BinaryExpression expression2 = new BinaryExpression(expression, new OperatorNode("-"), rr);
 		return expression2.compile();
 	}
 }

@@ -17,9 +17,9 @@ class ASTNodeTest {
 	void testBinaryExpression() {
 		NumberLiteral left = new NumberLiteral("123");
 		NumberLiteral right = new NumberLiteral("234");
-		BinaryExpression target = new BinaryExpression(left, "+", right);
+		BinaryExpression target = new BinaryExpression(left, new OperatorNode("+"), right);
 		assertEquals(357, target.evaluate());
-		BinaryExpression target2 = new BinaryExpression(right, "-", left);
+		BinaryExpression target2 = new BinaryExpression(right, new OperatorNode("-"), left);
 		assertEquals(111, target2.evaluate());
 		assertEquals("11007b1100ea60", target.compile());
 		assertEquals("1100ea11007b64", target2.compile());
@@ -29,9 +29,9 @@ class ASTNodeTest {
 	void testBinaryExpression2() {
 		NumberLiteral left = new NumberLiteral("123");
 		NumberLiteral right = new NumberLiteral("234");
-		BinaryExpression target = new BinaryExpression(left, "+", right);
+		BinaryExpression target = new BinaryExpression(left, new OperatorNode("+"), right);
 		NumberLiteral rr = new NumberLiteral("321");
-		BinaryExpression target2 = new BinaryExpression(target, "-", rr);
+		BinaryExpression target2 = new BinaryExpression(target, new OperatorNode("-"), rr);
 		assertEquals(36, target2.evaluate());
 	}
 
@@ -39,13 +39,13 @@ class ASTNodeTest {
 	void testBinaryExpressionOperators() {
 		NumberLiteral left = new NumberLiteral("9");
 		NumberLiteral right = new NumberLiteral("3");
-		BinaryExpression plus = new BinaryExpression(left, "+", right);
+		BinaryExpression plus = new BinaryExpression(left, new OperatorNode("+"), right);
 		assertEquals(12, plus.evaluate());
-		BinaryExpression minus = new BinaryExpression(left, "-", right);
+		BinaryExpression minus = new BinaryExpression(left, new OperatorNode("-"), right);
 		assertEquals(6, minus.evaluate());
-		BinaryExpression mul = new BinaryExpression(left, "*", right);
+		BinaryExpression mul = new BinaryExpression(left, new OperatorNode("*"), right);
 		assertEquals(27, mul.evaluate());
-		BinaryExpression div = new BinaryExpression(left, "/", right);
+		BinaryExpression div = new BinaryExpression(left, new OperatorNode("/"), right);
 		assertEquals(3, div.evaluate());
 	}
 }

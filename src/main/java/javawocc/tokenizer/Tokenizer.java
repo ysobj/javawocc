@@ -62,6 +62,14 @@ public class Tokenizer {
 		return new Token("1234", TokenType.NUMBER);
 	}
 
+	public Token peek() {
+		if (preloaded != null) {
+			return preloaded;
+		}
+		hasNext();
+		return preloaded;
+	}
+
 	private Token createToken(String string) {
 		return new Token(string, resolveType(string));
 	}

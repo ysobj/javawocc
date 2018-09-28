@@ -13,7 +13,7 @@ class TokenizerTest {
 	@Test
 	void testSimpleCase() {
 		Tokenizer tokenizer = new Tokenizer("1234 + 5678");
-		// 
+		//
 		assertTrue(tokenizer.hasNext());
 		Token token = tokenizer.next();
 		assertNotNull(token);
@@ -33,6 +33,19 @@ class TokenizerTest {
 		assertEquals(TokenType.NUMBER, token.getType());
 		//
 		assertFalse(tokenizer.hasNext());
+	}
+
+	@Test
+	void testSimplePeek() {
+		Tokenizer tokenizer = new Tokenizer("1234 + 5678");
+		Token token = tokenizer.peek();
+		assertNotNull(token);
+		assertEquals("1234", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
+		token = tokenizer.peek();
+		assertNotNull(token);
+		assertEquals("1234", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
 	}
 
 }
