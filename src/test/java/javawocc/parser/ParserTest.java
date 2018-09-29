@@ -30,4 +30,11 @@ class ParserTest {
 		assertNull(node);
 	}
 
+	@Test
+	void testSequenceParser() {
+		NumberParser p1 = new NumberParser();
+		OperatorParser p2 = new OperatorParser();
+		SequenceParser parser = new SequenceParser(p1, p2);
+		assertNotNull(parser.parse(new Tokenizer("123 +")));
+	}
 }
