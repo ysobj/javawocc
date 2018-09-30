@@ -1,5 +1,6 @@
 package javawocc.model;
 
+import javawocc.ast.ASTNode;
 import javawocc.ast.BinaryExpression;
 import javawocc.ast.NumberLiteral;
 import javawocc.ast.OperatorNode;
@@ -7,6 +8,9 @@ import javawocc.constant.Constant;
 import javawocc.constant.FieldRef;
 import javawocc.constant.MethodRef;
 import javawocc.constant.UTF8Constant;
+import javawocc.parser.MicroParser;
+import javawocc.parser.Parser;
+import javawocc.tokenizer.Tokenizer;
 
 public class MethodInfoBuilder {
 	private UTF8Constant code;
@@ -69,12 +73,9 @@ public class MethodInfoBuilder {
 	}
 
 	protected String convertStatement(String statement) {
-		String[] tmp = statement.split(" ");
-		NumberLiteral left = new NumberLiteral(tmp[0]);
-		NumberLiteral right = new NumberLiteral(tmp[2]);
-		BinaryExpression expression = new BinaryExpression(left, new OperatorNode(tmp[1]), right);
-		NumberLiteral rr = new NumberLiteral("321");
-		BinaryExpression expression2 = new BinaryExpression(expression, new OperatorNode("-"), rr);
-		return expression2.compile();
+		Parser parser = new MicroParser();
+		ASTNode node = parser.parse(new Tokenizer(statement));
+		System.out.println(node.compile());
+		return node.compile();
 	}
 }
