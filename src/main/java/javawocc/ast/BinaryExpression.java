@@ -22,10 +22,8 @@ public class BinaryExpression extends ASTNode {
 	@Override
 	public String compile() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("11"); // sipush
-		sb.append(String.format("%04x", left.evaluate()));
-		sb.append("11"); // sipush
-		sb.append(String.format("%04x", right.evaluate()));
+		sb.append(left.compile());
+		sb.append(right.compile());
 		sb.append(operator.compile());
 		return sb.toString();
 	}

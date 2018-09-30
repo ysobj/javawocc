@@ -14,7 +14,10 @@ public class NumberLiteral extends ASTNode {
 
 	@Override
 	public String compile() {
-		return String.format("%04x", value);
+		StringBuilder sb = new StringBuilder();
+		sb.append("11"); // sipush
+		sb.append(String.format("%04x", value));
+		return sb.toString();
 	}
 
 }
