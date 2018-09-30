@@ -44,7 +44,10 @@ public class Tokenizer {
 				int r = is.read();
 				switch (r) {
 				case ' ':
-					return createToken(sb.toString());
+					if (sb.length() > 0) {
+						return createToken(sb.toString());
+					}
+					break;
 				case -1:
 					if (sb.length() == 0) {
 						this.preloaded = EOS;

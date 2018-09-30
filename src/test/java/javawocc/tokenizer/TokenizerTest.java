@@ -9,10 +9,9 @@ import javawocc.tokenizer.Token.TokenType;
 import javawocc.tokenizer.Tokenizer;
 
 class TokenizerTest {
-
 	@Test
 	void testSimpleCase() {
-		Tokenizer tokenizer = new Tokenizer("1234 + 5678");
+		Tokenizer tokenizer = new Tokenizer("1234 +   5678");
 		//
 		assertTrue(tokenizer.hasNext());
 		Token token = tokenizer.next();
