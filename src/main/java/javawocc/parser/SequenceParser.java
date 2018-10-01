@@ -1,6 +1,7 @@
 package javawocc.parser;
 
 import javawocc.ast.ASTNode;
+import javawocc.ast.ASTNodeList;
 import javawocc.tokenizer.Tokenizer;
 
 public class SequenceParser implements Parser {
@@ -12,11 +13,14 @@ public class SequenceParser implements Parser {
 
 	@Override
 	public ASTNode parse(Tokenizer tokenizer) {
-		ASTNode node = null;
+		ASTNodeList list = new ASTNodeList();
 		for (Parser parser : parsers) {
-			node = parser.parse(tokenizer);
+			ASTNode node = parser.parse(tokenizer);
+			if (node != null) {
+				list.add(node);
+			}
 		}
-		return node;
+		return list;
 	}
 
 }
