@@ -31,7 +31,6 @@ class MicroParserTest {
 		assertEquals(12 + 34, parser.parse(new Tokenizer("12 + 34")).evaluate());
 	}
 
-	@Test
 	void test2() {
 		Parser parser = new SequenceParser(new NumberParser(), new OperatorParser(), new NumberParser()) {
 
@@ -49,5 +48,16 @@ class MicroParserTest {
 		assertEquals(12 + 34 + 34, parser.parse(new Tokenizer("12 + 34 + 34")).evaluate());
 		// should be 114, but microparser has not implement order of operators yet.
 		assertEquals((12 + 34 + 34) * 2, parser.parse(new Tokenizer("12 + 34 + 34 * 2")).evaluate());
+	}
+
+	@Test
+	void testRepeatParser() {
+		Parser parser = new OneToManyParser(new NumberParser());
+		ASTNodeList node = (ASTNodeList) parser.parse(new Tokenizer("1"));
+		assertEquals(1, node.getNodeList().size());
+		node = (ASTNodeList) parser.parse(new Tokenizer("1 2 3"));
+		assertEquals(3, node.getNodeList().size());
+//		node = (ASTNodeList) parser.parse(new Tokenizer("1 2 3 A"));
+//		assertEquals(3, node.getNodeList().size());
 	}
 }
