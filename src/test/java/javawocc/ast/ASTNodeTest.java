@@ -10,7 +10,7 @@ class ASTNodeTest {
 	void testNumberLiteral() {
 		NumberLiteral num = new NumberLiteral("123");
 		assertEquals(123, num.evaluate());
-		assertEquals("007b", num.compile());
+		assertEquals("11007b", num.compile());
 	}
 
 	@Test

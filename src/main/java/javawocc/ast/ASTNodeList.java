@@ -31,4 +31,7 @@ public class ASTNodeList extends ASTNode {
 		this.list.add(node);
 	}
 
+	public List<ASTNode> getNodeList(){
+		return list;
+	}
 }

@@ -20,7 +20,11 @@ public class SequenceParser implements Parser {
 				list.add(node);
 			}
 		}
-		return list;
+		return build(list);
+	}
+
+	protected ASTNode build(ASTNodeList node) {
+		return node;
 	}
 
 }
