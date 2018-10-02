@@ -9,10 +9,10 @@ import javawocc.tokenizer.Tokenizer;
 public class NumberParser implements Parser {
 
 	@Override
-	public ASTNode parse(Tokenizer tokenizer) {
+	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		Token token = tokenizer.peek();
 		if (token == null || token.getType() == TokenType.EOS || token.getType() != TokenType.NUMBER) {
-			return null;
+			throw new ParseException();
 		}
 		token = tokenizer.next();
 		return new NumberLiteral(token.getOriginal());

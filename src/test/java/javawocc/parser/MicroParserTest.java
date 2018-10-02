@@ -51,13 +51,19 @@ class MicroParserTest {
 	}
 
 	@Test
-	void testRepeatParser() throws Exception {
+	void testOneToManyParser() throws Exception {
 		Parser parser = new OneToManyParser(new NumberParser());
 		ASTNodeList node = (ASTNodeList) parser.parse(new Tokenizer("1"));
 		assertEquals(1, node.getNodeList().size());
 		node = (ASTNodeList) parser.parse(new Tokenizer("1 2 3"));
 		assertEquals(3, node.getNodeList().size());
-		// node = (ASTNodeList) parser.parse(new Tokenizer("1 2 3 A"));
-		// assertEquals(3, node.getNodeList().size());
+		node = (ASTNodeList) parser.parse(new Tokenizer("1 2 3 A"));
+		assertEquals(3, node.getNodeList().size());
+	}
+
+	@Test
+	void testOneToManyParserThrowsParseException() throws Exception {
+		Parser parser = new OneToManyParser(new NumberParser());
+		assertThrows(ParseException.class, () -> parser.parse(new Tokenizer("A")));
 	}
 }
