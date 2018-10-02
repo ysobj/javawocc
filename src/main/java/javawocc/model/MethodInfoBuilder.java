@@ -27,7 +27,7 @@ public class MethodInfoBuilder {
 		return methodInfo;
 	}
 
-	public MethodInfo createMethod0(Constant name, Constant descriptor, MethodRef m1) {
+	public MethodInfo createMethod0(Constant name, Constant descriptor, MethodRef m1) throws Exception {
 		// method[0]-->
 		String content = "0001" // method[0] access_flag
 				+ String.format("%04x", name.getIndex()) // method[0] name_index
@@ -49,7 +49,8 @@ public class MethodInfoBuilder {
 		return method;
 	}
 
-	public MethodInfo createMethod1(Constant name, Constant descriptor, String statement, FieldRef f1, MethodRef m2) {
+	public MethodInfo createMethod1(Constant name, Constant descriptor, String statement, FieldRef f1, MethodRef m2)
+			throws Exception {
 		String content = "0009" // method[1] access_flag
 				+ String.format("%04x", name.getIndex()) // method[0] name_index
 				+ String.format("%04x", descriptor.getIndex()) // method[0] descriptor_index
@@ -72,7 +73,7 @@ public class MethodInfoBuilder {
 		return method;
 	}
 
-	protected String convertStatement(String statement) {
+	protected String convertStatement(String statement) throws Exception {
 		Parser parser = new MicroParser();
 		ASTNode node = parser.parse(new Tokenizer(statement));
 		System.out.println(node.compile());

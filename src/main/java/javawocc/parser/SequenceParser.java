@@ -12,7 +12,7 @@ public class SequenceParser implements Parser {
 	}
 
 	@Override
-	public ASTNode parse(Tokenizer tokenizer) {
+	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		ASTNodeList list = new ASTNodeList();
 		for (Parser parser : parsers) {
 			ASTNode node = parser.parse(tokenizer);

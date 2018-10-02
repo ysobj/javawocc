@@ -12,7 +12,7 @@ public class OneToManyParser implements Parser {
 	}
 
 	@Override
-	public ASTNode parse(Tokenizer tokenizer) {
+	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		ASTNodeList list = new ASTNodeList();
 		while (tokenizer.hasNext()) {
 			for (Parser parser : parsers) {

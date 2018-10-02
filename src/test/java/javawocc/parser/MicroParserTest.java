@@ -15,7 +15,7 @@ import javawocc.tokenizer.Tokenizer;
 class MicroParserTest {
 
 	@Test
-	void test() {
+	void test() throws Exception {
 		Parser parser = new SequenceParser(new NumberParser(), new OperatorParser(), new NumberParser()) {
 
 			@Override
@@ -31,7 +31,7 @@ class MicroParserTest {
 		assertEquals(12 + 34, parser.parse(new Tokenizer("12 + 34")).evaluate());
 	}
 
-	void test2() {
+	void test2() throws Exception {
 		Parser parser = new SequenceParser(new NumberParser(), new OperatorParser(), new NumberParser()) {
 
 			@Override
@@ -51,13 +51,13 @@ class MicroParserTest {
 	}
 
 	@Test
-	void testRepeatParser() {
+	void testRepeatParser() throws Exception {
 		Parser parser = new OneToManyParser(new NumberParser());
 		ASTNodeList node = (ASTNodeList) parser.parse(new Tokenizer("1"));
 		assertEquals(1, node.getNodeList().size());
 		node = (ASTNodeList) parser.parse(new Tokenizer("1 2 3"));
 		assertEquals(3, node.getNodeList().size());
-//		node = (ASTNodeList) parser.parse(new Tokenizer("1 2 3 A"));
-//		assertEquals(3, node.getNodeList().size());
+		// node = (ASTNodeList) parser.parse(new Tokenizer("1 2 3 A"));
+		// assertEquals(3, node.getNodeList().size());
 	}
 }

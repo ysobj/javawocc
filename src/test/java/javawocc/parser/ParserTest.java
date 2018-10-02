@@ -11,7 +11,7 @@ import javawocc.tokenizer.Tokenizer;
 class ParserTest {
 
 	@Test
-	void testNumberParser() {
+	void testNumberParser() throws Exception {
 		NumberParser parser = new NumberParser();
 		ASTNode node = parser.parse(new Tokenizer("123"));
 		assertNotNull(node);
@@ -21,7 +21,7 @@ class ParserTest {
 	}
 
 	@Test
-	void testOperatorParser() {
+	void testOperatorParser() throws Exception {
 		OperatorParser parser = new OperatorParser();
 		ASTNode node = parser.parse(new Tokenizer("+"));
 		assertNotNull(node);
@@ -31,7 +31,7 @@ class ParserTest {
 	}
 
 	@Test
-	void testSequenceParser() {
+	void testSequenceParser() throws Exception {
 		NumberParser p1 = new NumberParser();
 		OperatorParser p2 = new OperatorParser();
 		SequenceParser parser = new SequenceParser(p1, p2);
