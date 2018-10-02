@@ -1,6 +1,7 @@
 package javawocc.model;
 
 import javawocc.ast.ASTNode;
+import javawocc.ast.ASTNodeList;
 import javawocc.ast.BinaryExpression;
 import javawocc.ast.NumberLiteral;
 import javawocc.ast.OperatorNode;
@@ -9,7 +10,11 @@ import javawocc.constant.FieldRef;
 import javawocc.constant.MethodRef;
 import javawocc.constant.UTF8Constant;
 import javawocc.parser.MicroParser;
+import javawocc.parser.NumberParser;
+import javawocc.parser.OneToManyParser;
+import javawocc.parser.OperatorParser;
 import javawocc.parser.Parser;
+import javawocc.parser.SequenceParser;
 import javawocc.tokenizer.Tokenizer;
 
 public class MethodInfoBuilder {
@@ -74,7 +79,17 @@ public class MethodInfoBuilder {
 	}
 
 	protected String convertStatement(String statement) throws Exception {
-		Parser parser = new MicroParser();
+		Parser parser = new SequenceParser(new NumberParser(),
+				new OneToManyParser(new OperatorParser(), new NumberParser())) {
+
+			@Override
+			protected ASTNode build(ASTNodeList node) {
+				ASTNode left = node.getNodeList().get(0);
+				ASTNodeList tmp = (ASTNodeList) node.getNodeList().get(1);
+				return new BinaryExpression(left, (OperatorNode) tmp.getNodeList().get(0), tmp.getNodeList().get(1));
+			}
+
+		};
 		ASTNode node = parser.parse(new Tokenizer(statement));
 		System.out.println(node.compile());
 		return node.compile();
