@@ -36,4 +36,9 @@ public class OperatorNode extends ASTNode {
 	public Operator getOperator() {
 		return this.operator;
 	}
+
+	@Override
+	public String toString() {
+		return operator.toString();
+	}
 }

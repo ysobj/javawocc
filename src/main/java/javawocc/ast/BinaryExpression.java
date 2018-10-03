@@ -27,4 +27,9 @@ public class BinaryExpression extends ASTNode {
 		sb.append(operator.compile());
 		return sb.toString();
 	}
+
+	@Override
+	public String toString() {
+		return "(" + left.toString() + " " + operator.toString() + " " + right.toString() + ")";
+	}
 }

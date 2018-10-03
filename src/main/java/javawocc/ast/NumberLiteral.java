@@ -20,4 +20,9 @@ public class NumberLiteral extends ASTNode {
 		return sb.toString();
 	}
 
+	@Override
+	public String toString() {
+		return "" + value;
+	}
+
 }

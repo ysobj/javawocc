@@ -12,4 +12,9 @@ class PlusOperator implements Operator {
 		return "60";
 	}
 
+	@Override
+	public String toString() {
+		return "+";
+	}
+
 }

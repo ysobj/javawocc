@@ -11,6 +11,13 @@ class ASTNodeTest {
 		NumberLiteral num = new NumberLiteral("123");
 		assertEquals(123, num.evaluate());
 		assertEquals("11007b", num.compile());
+		assertEquals("123", num.toString());
+	}
+	
+	@Test
+	void testOperatorNode() {
+		OperatorNode op = new OperatorNode("+");
+		assertEquals("+", op.toString());
 	}
 
 	@Test
@@ -19,6 +26,7 @@ class ASTNodeTest {
 		NumberLiteral right = new NumberLiteral("234");
 		BinaryExpression target = new BinaryExpression(left, new OperatorNode("+"), right);
 		assertEquals(357, target.evaluate());
+		assertEquals("(123 + 234)", target.toString());
 		BinaryExpression target2 = new BinaryExpression(right, new OperatorNode("-"), left);
 		assertEquals(111, target2.evaluate());
 		assertEquals("11007b1100ea60", target.compile());
