@@ -12,4 +12,9 @@ class MinusOperator implements Operator {
 		return "64";
 	}
 
+	@Override
+	public String toString() {
+		return "-";
+	}
+
 }

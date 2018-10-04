@@ -41,6 +41,7 @@ class ASTNodeTest {
 		NumberLiteral rr = new NumberLiteral("321");
 		BinaryExpression target2 = new BinaryExpression(target, new OperatorNode("-"), rr);
 		assertEquals(36, target2.evaluate());
+		assertEquals("((123 + 234) - 321)", target2.toString());
 	}
 
 	@Test

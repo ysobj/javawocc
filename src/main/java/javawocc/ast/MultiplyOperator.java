@@ -12,4 +12,9 @@ class MultiplyOperator implements Operator {
 		return "68";
 	}
 
+	@Override
+	public String toString() {
+		return "*";
+	}
+
 }

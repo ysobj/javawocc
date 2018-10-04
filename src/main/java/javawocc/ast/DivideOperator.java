@@ -12,4 +12,9 @@ class DivideOperator implements Operator {
 		return "6c";
 	}
 
+	@Override
+	public String toString() {
+		return "/";
+	}
+
 }
