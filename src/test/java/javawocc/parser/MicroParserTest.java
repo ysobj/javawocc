@@ -31,15 +31,23 @@ class MicroParserTest {
 		assertEquals(12 + 34, parser.parse(new Tokenizer("12 + 34")).evaluate());
 	}
 
+	@Test
 	void test2() throws Exception {
-		Parser parser = new SequenceParser(new NumberParser(), new OperatorParser(), new NumberParser()) {
+		Parser parser = new SequenceParser(new NumberParser(),
+				new OneToManyParser(new OperatorParser(), new NumberParser())) {
 
 			@Override
 			protected ASTNode build(ASTNodeList node) {
 				List<ASTNode> list = node.getNodeList();
-				BinaryExpression expression = new BinaryExpression(list.get(0), (OperatorNode) list.get(1),
-						list.get(2));
-				return expression;
+				list.addAll(((ASTNodeList) list.remove(1)).getNodeList());
+				while (list.size() > 1) {
+					ASTNode left = list.remove(0);
+					OperatorNode op = (OperatorNode) list.remove(0);
+					ASTNode right = list.remove(0);
+					BinaryExpression expression = new BinaryExpression(left, op, right);
+					list.add(0, expression);
+				}
+				return list.get(0);
 			}
 
 		};
