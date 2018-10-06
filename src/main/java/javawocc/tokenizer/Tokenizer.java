@@ -10,6 +10,7 @@ import javawocc.tokenizer.Token.TokenType;
 public class Tokenizer {
 	private Reader is;
 	private Token preloaded;
+	private Integer buffer;
 	private static final Token EOS = new Token("", TokenType.EOS);
 
 	public Tokenizer(String string) {
@@ -39,11 +40,18 @@ public class Tokenizer {
 			this.preloaded = null;
 			return t;
 		}
+		if (buffer != null) {
+			char tmp = (char) buffer.intValue();
+			buffer = null;
+			return createToken("" + tmp);
+		}
 		try {
 			StringBuilder sb = new StringBuilder();
 			while (true) {
 				int r = is.read();
 				switch (r) {
+				case ';':
+					buffer = r;
 				case ' ':
 					if (sb.length() > 0) {
 						return createToken(sb.toString());
@@ -82,6 +90,9 @@ public class Tokenizer {
 		char x = string.charAt(0);
 		if (x >= '0' && x <= '9') {
 			return TokenType.NUMBER;
+		}
+		if (x == ';') {
+			return TokenType.TERMINATOR;
 		}
 		if (in(string, "+", "-", "*", "/", "=")) {
 			return TokenType.OPERATOR;

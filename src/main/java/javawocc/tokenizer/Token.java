@@ -2,7 +2,7 @@ package javawocc.tokenizer;
 
 public class Token {
 	public static enum TokenType {
-		IDENTIFIER, NUMBER, OPERATOR, EOS
+		IDENTIFIER, NUMBER, OPERATOR, EOS, TERMINATOR
 	}
 
 	private final String original;

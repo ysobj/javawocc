@@ -11,7 +11,7 @@ import javawocc.tokenizer.Tokenizer;
 class TokenizerTest {
 	@Test
 	void testSimpleCase() {
-		Tokenizer tokenizer = new Tokenizer("a = 1234 +   5678");
+		Tokenizer tokenizer = new Tokenizer("a = 1234 +   5678; b = 123");
 		//
 		assertTrue(tokenizer.hasNext());
 		Token token = tokenizer.next();
@@ -41,6 +41,30 @@ class TokenizerTest {
 		token = tokenizer.next();
 		assertNotNull(token);
 		assertEquals("5678", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals(";", token.getOriginal());
+		assertEquals(TokenType.TERMINATOR, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("b", token.getOriginal());
+		assertEquals(TokenType.IDENTIFIER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("=", token.getOriginal());
+		assertEquals(TokenType.OPERATOR, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("123", token.getOriginal());
 		assertEquals(TokenType.NUMBER, token.getType());
 		//
 		assertFalse(tokenizer.hasNext());
