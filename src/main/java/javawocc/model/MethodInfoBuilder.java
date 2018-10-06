@@ -12,6 +12,7 @@ import javawocc.constant.Constant;
 import javawocc.constant.FieldRef;
 import javawocc.constant.MethodRef;
 import javawocc.constant.UTF8Constant;
+import javawocc.parser.JavawoccParser;
 import javawocc.parser.MicroParser;
 import javawocc.parser.NumberParser;
 import javawocc.parser.OneToManyParser;
@@ -82,21 +83,8 @@ public class MethodInfoBuilder {
 	}
 
 	protected String convertStatement(String statement) throws Exception {
-		// factor = NUMBER | IDENTIFIER
-		// statement = factor (OPERATOR factor)
-		Parser statementParser = new SequenceParser(new NumberParser(),
-				new OneToManyParser(new OperatorParser(), new NumberParser())) {
-
-			@Override
-			protected ASTNode build(ASTNodeList node) {
-				List<ASTNode> list = node.getNodeList();
-				list.addAll(((ASTNodeList) list.remove(1)).getNodeList());
-				OperatorPrecedenceResolver resolver = new OperatorPrecedenceResolver();
-				return resolver.resolve(list);
-			}
-
-		};
-		ASTNode node = statementParser.parse(new Tokenizer(statement));
+		Parser javawoccParser = new JavawoccParser();
+		ASTNode node = javawoccParser.parse(new Tokenizer(statement));
 		System.out.println(node.compile());
 		return node.compile();
 	}
