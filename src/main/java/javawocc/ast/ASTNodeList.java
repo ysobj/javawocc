@@ -3,6 +3,8 @@ package javawocc.ast;
 import java.util.ArrayList;
 import java.util.List;
 
+import javawocc.model.Environment;
+
 public class ASTNodeList extends ASTNode {
 	private List<ASTNode> list;
 
@@ -16,7 +18,7 @@ public class ASTNodeList extends ASTNode {
 	}
 
 	@Override
-	public Object evaluate() {
+	public Object evaluate(Environment env) {
 		// TODO Auto-generated method stub
 		return null;
 	}

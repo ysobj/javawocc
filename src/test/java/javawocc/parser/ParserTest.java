@@ -6,16 +6,18 @@ import org.junit.jupiter.api.Test;
 
 import javawocc.ast.ASTNode;
 import javawocc.ast.OperatorNode;
+import javawocc.model.Environment;
 import javawocc.tokenizer.Tokenizer;
 
 class ParserTest {
 
 	@Test
 	void testNumberParser() throws Exception {
+		Environment env = new Environment();
 		NumberParser parser = new NumberParser();
 		ASTNode node = parser.parse(new Tokenizer("123"));
 		assertNotNull(node);
-		assertEquals(123, node.evaluate());
+		assertEquals(123, node.evaluate(env));
 		assertThrows(ParseException.class, () -> parser.parse(new Tokenizer("a")));
 	}
 

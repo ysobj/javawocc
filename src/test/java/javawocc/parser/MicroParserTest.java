@@ -10,6 +10,7 @@ import javawocc.ast.ASTNode;
 import javawocc.ast.ASTNodeList;
 import javawocc.ast.BinaryExpression;
 import javawocc.ast.OperatorNode;
+import javawocc.model.Environment;
 import javawocc.tokenizer.Tokenizer;
 
 class MicroParserTest {
@@ -27,8 +28,8 @@ class MicroParserTest {
 			}
 
 		};
-
-		assertEquals(12 + 34, parser.parse(new Tokenizer("12 + 34")).evaluate());
+		Environment env = new Environment();
+		assertEquals(12 + 34, parser.parse(new Tokenizer("12 + 34")).evaluate(env));
 	}
 
 	@Test
@@ -51,11 +52,11 @@ class MicroParserTest {
 			}
 
 		};
-
-		assertEquals(12 + 34, parser.parse(new Tokenizer("12 + 34")).evaluate());
-		assertEquals(12 + 34 + 34, parser.parse(new Tokenizer("12 + 34 + 34")).evaluate());
+		Environment env = new Environment();
+		assertEquals(12 + 34, parser.parse(new Tokenizer("12 + 34")).evaluate(env));
+		assertEquals(12 + 34 + 34, parser.parse(new Tokenizer("12 + 34 + 34")).evaluate(env));
 		// should be 114, but microparser has not implement order of operators yet.
-		assertEquals((12 + 34 + 34) * 2, parser.parse(new Tokenizer("12 + 34 + 34 * 2")).evaluate());
+		assertEquals((12 + 34 + 34) * 2, parser.parse(new Tokenizer("12 + 34 + 34 * 2")).evaluate(env));
 	}
 
 	@Test

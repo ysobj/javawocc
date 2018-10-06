@@ -1,5 +1,7 @@
 package javawocc.ast;
 
+import javawocc.model.Environment;
+
 public class OperatorNode extends ASTNode {
 	private Operator operator;
 
@@ -26,7 +28,7 @@ public class OperatorNode extends ASTNode {
 	}
 
 	@Override
-	public Object evaluate() {
+	public Object evaluate(Environment env) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -10,7 +10,7 @@ public class Identifier extends ASTNode {
 	}
 
 	@Override
-	public Object evaluate() {
+	public Object evaluate(Environment env) {
 		// TODO Auto-generated method stub
 		return null;
 	}

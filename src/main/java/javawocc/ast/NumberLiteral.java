@@ -1,5 +1,7 @@
 package javawocc.ast;
 
+import javawocc.model.Environment;
+
 public class NumberLiteral extends ASTNode {
 	private Integer value;
 
@@ -8,7 +10,7 @@ public class NumberLiteral extends ASTNode {
 	}
 
 	@Override
-	public Object evaluate() {
+	public Object evaluate(Environment env) {
 		return value;
 	}
 

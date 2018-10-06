@@ -1,5 +1,7 @@
 package javawocc.ast;
 
+import javawocc.model.Environment;
+
 public class BinaryExpression extends ASTNode {
 	private ASTNode left;
 	private ASTNode right;
@@ -13,9 +15,9 @@ public class BinaryExpression extends ASTNode {
 	}
 
 	@Override
-	public Object evaluate() {
-		Integer lvalue = (Integer) left.evaluate();
-		Integer rvalue = (Integer) right.evaluate();
+	public Object evaluate(Environment env) {
+		Integer lvalue = (Integer) left.evaluate(env);
+		Integer rvalue = (Integer) right.evaluate(env);
 		return operator.getOperator().evaluate(lvalue, rvalue);
 	}
 
