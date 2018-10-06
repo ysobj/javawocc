@@ -17,4 +17,15 @@ class DivideOperator implements Operator {
 		return "/";
 	}
 
+	@Override
+	public int getOrder() {
+		return 80;
+	}
+
+	@Override
+	public boolean isTypeRight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

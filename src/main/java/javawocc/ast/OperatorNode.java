@@ -37,8 +37,26 @@ public class OperatorNode extends ASTNode {
 		return this.operator;
 	}
 
+	public int getOrder() {
+		return this.getOperator().getOrder();
+	}
+
 	@Override
 	public String toString() {
 		return operator.toString();
+	}
+
+	public boolean isHigherOrder(OperatorNode other) {
+		if (this.getOrder() > other.getOrder()) {
+			return true;
+		}
+		if (this.getOrder() == other.getOrder()){
+			return !this.isTypeRight();
+		}
+		return false;
+	}
+
+	public boolean isTypeRight() {
+		return operator.isTypeRight();
 	}
 }

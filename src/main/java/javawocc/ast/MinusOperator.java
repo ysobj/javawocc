@@ -17,4 +17,15 @@ class MinusOperator implements Operator {
 		return "-";
 	}
 
+	@Override
+	public int getOrder() {
+		return 50;
+	}
+
+	@Override
+	public boolean isTypeRight() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
