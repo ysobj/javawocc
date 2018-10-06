@@ -3,6 +3,7 @@ package javawocc.tokenizer;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.Arrays;
 
 import javawocc.tokenizer.Token.TokenType;
 
@@ -82,7 +83,13 @@ public class Tokenizer {
 		if (x >= '0' && x <= '9') {
 			return TokenType.NUMBER;
 		}
-		return TokenType.OPERATOR;
+		if (in(string, "+", "-", "*", "/", "=")) {
+			return TokenType.OPERATOR;
+		}
+		return TokenType.IDENTIFIER;
 	}
 
+	private boolean in(String obj, String... candidates) {
+		return Arrays.stream(candidates).anyMatch((c) -> obj.equals(c));
+	}
 }

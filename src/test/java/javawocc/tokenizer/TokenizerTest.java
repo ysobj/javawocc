@@ -11,10 +11,22 @@ import javawocc.tokenizer.Tokenizer;
 class TokenizerTest {
 	@Test
 	void testSimpleCase() {
-		Tokenizer tokenizer = new Tokenizer("1234 +   5678");
+		Tokenizer tokenizer = new Tokenizer("a = 1234 +   5678");
 		//
 		assertTrue(tokenizer.hasNext());
 		Token token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("a", token.getOriginal());
+		assertEquals(TokenType.IDENTIFIER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("=", token.getOriginal());
+		assertEquals(TokenType.OPERATOR, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
 		assertNotNull(token);
 		assertEquals("1234", token.getOriginal());
 		assertEquals(TokenType.NUMBER, token.getType());
