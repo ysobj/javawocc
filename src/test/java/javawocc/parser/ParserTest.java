@@ -36,4 +36,14 @@ class ParserTest {
 		SequenceParser parser = new SequenceParser(p1, p2);
 		assertNotNull(parser.parse(new Tokenizer("123 +")));
 	}
+
+	@Test
+	void testChoiceParser() throws Exception {
+		NumberParser p1 = new NumberParser();
+		OperatorParser p2 = new OperatorParser();
+		ChoiceParser parser = new ChoiceParser(p1, p2);
+		assertNotNull(parser.parse(new Tokenizer("123")));
+		assertNotNull(parser.parse(new Tokenizer("+")));
+		assertThrows(ParseException.class, ()->parser.parse(new Tokenizer("a")));
+	}
 }

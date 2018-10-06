@@ -82,6 +82,8 @@ public class MethodInfoBuilder {
 	}
 
 	protected String convertStatement(String statement) throws Exception {
+		// factor = NUMBER | IDENTIFIER
+		// statement = factor (OPERATOR factor)
 		Parser statementParser = new SequenceParser(new NumberParser(),
 				new OneToManyParser(new OperatorParser(), new NumberParser())) {
 
