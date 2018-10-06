@@ -14,7 +14,7 @@ public class JavawoccParser implements Parser {
 		// factor = NUMBER | IDENTIFIER
 		// statement = factor (OPERATOR factor)
 
-		parser = new SequenceParser(new NumberParser(), new OneToManyParser(new OperatorParser(), new NumberParser())) {
+		parser = new SequenceParser(new ChoiceParser(new NumberParser(), new IdentifierParser()), new OneToManyParser(new OperatorParser(), new NumberParser())) {
 
 			@Override
 			protected ASTNode build(ASTNodeList node) {

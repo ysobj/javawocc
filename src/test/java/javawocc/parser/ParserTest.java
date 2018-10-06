@@ -44,6 +44,14 @@ class ParserTest {
 		ChoiceParser parser = new ChoiceParser(p1, p2);
 		assertNotNull(parser.parse(new Tokenizer("123")));
 		assertNotNull(parser.parse(new Tokenizer("+")));
-		assertThrows(ParseException.class, ()->parser.parse(new Tokenizer("a")));
+		assertThrows(ParseException.class, () -> parser.parse(new Tokenizer("a")));
+	}
+
+	@Test
+	void testJavawoccParser() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("a = 1"));
+		assertNotNull(node);
+		assertEquals("(a = 1)", node.toString());
 	}
 }
