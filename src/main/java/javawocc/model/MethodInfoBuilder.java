@@ -1,10 +1,13 @@
 package javawocc.model;
 
+import java.util.List;
+
 import javawocc.ast.ASTNode;
 import javawocc.ast.ASTNodeList;
 import javawocc.ast.BinaryExpression;
 import javawocc.ast.NumberLiteral;
 import javawocc.ast.OperatorNode;
+import javawocc.ast.OperatorPrecedenceResolver;
 import javawocc.constant.Constant;
 import javawocc.constant.FieldRef;
 import javawocc.constant.MethodRef;
@@ -63,7 +66,7 @@ public class MethodInfoBuilder {
 		// method[1].attribute[0]
 
 		CodeAttributeInfo codeAttribute = new CodeAttributeInfo(code);
-		codeAttribute.setMaxStack(3);
+		codeAttribute.setMaxStack(4);
 		codeAttribute.setMaxLocals(1);
 		codeAttribute.setCode( //
 				"b2" + String.format("%04x", f1.getIndex()) // getstatic #2
@@ -79,18 +82,19 @@ public class MethodInfoBuilder {
 	}
 
 	protected String convertStatement(String statement) throws Exception {
-		Parser parser = new SequenceParser(new NumberParser(),
+		Parser statementParser = new SequenceParser(new NumberParser(),
 				new OneToManyParser(new OperatorParser(), new NumberParser())) {
 
 			@Override
 			protected ASTNode build(ASTNodeList node) {
-				ASTNode left = node.getNodeList().get(0);
-				ASTNodeList tmp = (ASTNodeList) node.getNodeList().get(1);
-				return new BinaryExpression(left, (OperatorNode) tmp.getNodeList().get(0), tmp.getNodeList().get(1));
+				List<ASTNode> list = node.getNodeList();
+				list.addAll(((ASTNodeList) list.remove(1)).getNodeList());
+				OperatorPrecedenceResolver resolver = new OperatorPrecedenceResolver();
+				return resolver.resolve(list);
 			}
 
 		};
-		ASTNode node = parser.parse(new Tokenizer(statement));
+		ASTNode node = statementParser.parse(new Tokenizer(statement));
 		System.out.println(node.compile());
 		return node.compile();
 	}

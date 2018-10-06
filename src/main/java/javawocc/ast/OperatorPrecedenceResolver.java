@@ -12,43 +12,6 @@ public class OperatorPrecedenceResolver {
 		return arr[0];
 
 	}
-	//
-	// protected List<ASTNode> process(List<ASTNode> list) {
-	// if (list.size() == 3) {
-	// list.add(createBinaryExpression(list.remove(0), list.remove(0),
-	// list.remove(0)));
-	// return list;
-	// }
-	// if (list.size() < 5) {
-	// throw new IllegalArgumentException();
-	// }
-	// OperatorNode lop = (OperatorNode) list.get(1);
-	// OperatorNode rop = (OperatorNode) list.get(3);
-	// if (lop.getOperator().getOrder() > rop.getOperator().getOrder()) {
-	// ASTNode node = createBinaryExpression(list.remove(0), list.remove(0),
-	// list.remove(0));
-	// list.add(0, node);
-	// } else if (lop.getOperator().getOrder() < rop.getOperator().getOrder()) {
-	// List<ASTNode> sub1 = list.subList(0, 2);
-	// List<ASTNode> sub2 = process(list.subList(2, list.size()));
-	// list.clear();
-	// list.addAll(sub1);
-	// list.addAll(sub2);
-	// } else {
-	// if (lop.isTypeRight() && rop.isTypeRight()) {
-	// ASTNode node = createBinaryExpression(list.remove(0), list.remove(0),
-	// list.remove(0));
-	// list.add(0, node);
-	// } else {
-	// List<ASTNode> sub1 = list.subList(0, 2);
-	// List<ASTNode> sub2 = process(list.subList(2, list.size()));
-	// list.clear();
-	// list.addAll(sub1);
-	// list.addAll(sub2);
-	// }
-	// }
-	// return list;
-	// }
 
 	protected BinaryExpression createBinaryExpression(ASTNode[] arr, int position) {
 		return new BinaryExpression(arr[position - 1], (OperatorNode) arr[position], arr[position + 1]);
@@ -72,13 +35,6 @@ public class OperatorPrecedenceResolver {
 			arr = build(arr, pos + 2);
 		}
 		return arr;
-	}
-
-	protected ASTNode process(ASTNode[] arr) {
-		while (arr.length > 1) {
-			arr = build(arr, 0);
-		}
-		return arr[0];
 	}
 
 	protected OperatorNode getLeftOperator(ASTNode[] arr, int pos) {
