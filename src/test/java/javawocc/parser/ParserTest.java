@@ -52,8 +52,11 @@ class ParserTest {
 	@Test
 	void testJavawoccParser() throws Exception {
 		JavawoccParser parser = new JavawoccParser();
-		ASTNode node = parser.parse(new Tokenizer("a = 1"));
+		ASTNode node = parser.parse(new Tokenizer("a = 1 + 2"));
 		assertNotNull(node);
-		assertEquals("(a = 1)", node.toString());
+		assertEquals("(a = (1 + 2))", node.toString());
+		Environment env = new Environment();
+		node.evaluate(env);
+		assertEquals(3, env.get("a"));
 	}
 }

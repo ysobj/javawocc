@@ -1,10 +1,14 @@
 package javawocc.ast;
 
+import javawocc.model.Environment;
+
 class PlusOperator implements Operator {
 
 	@Override
-	public Object evaluate(Integer lvalue, Integer rvalue) {
-		return lvalue + rvalue;
+	public Object evaluate(Environment env, ASTNode first, ASTNode second) {
+		Number f = (Number) first.evaluate(env);
+		Number s = (Number) second.evaluate(env);
+		return f.intValue() + s.intValue();
 	}
 
 	@Override

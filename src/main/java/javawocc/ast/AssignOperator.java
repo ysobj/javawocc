@@ -1,10 +1,14 @@
 package javawocc.ast;
 
+import javawocc.model.Environment;
+
 public class AssignOperator implements Operator {
 
 	@Override
-	public Object evaluate(Integer lvalue, Integer rvalue) {
-		return null;
+	public Object evaluate(Environment env, ASTNode first, ASTNode second) {
+		Object value = second.evaluate(env);
+		env.put(first.toString(), value);
+		return value;
 	}
 
 	@Override

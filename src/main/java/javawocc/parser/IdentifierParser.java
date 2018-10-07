@@ -1,7 +1,7 @@
 package javawocc.parser;
 
 import javawocc.ast.ASTNode;
-import javawocc.model.Identifier;
+import javawocc.ast.Identifier;
 import javawocc.tokenizer.Token;
 import javawocc.tokenizer.Tokenizer;
 import javawocc.tokenizer.Token.TokenType;

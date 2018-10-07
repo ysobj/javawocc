@@ -1,6 +1,7 @@
-package javawocc.model;
+package javawocc.ast;
 
 import javawocc.ast.ASTNode;
+import javawocc.model.Environment;
 
 public class Identifier extends ASTNode {
 	private String original;
@@ -11,8 +12,7 @@ public class Identifier extends ASTNode {
 
 	@Override
 	public Object evaluate(Environment env) {
-		// TODO Auto-generated method stub
-		return null;
+		return env.get(original);
 	}
 
 	@Override

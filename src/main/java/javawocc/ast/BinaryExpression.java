@@ -16,9 +16,7 @@ public class BinaryExpression extends ASTNode {
 
 	@Override
 	public Object evaluate(Environment env) {
-		Integer lvalue = (Integer) left.evaluate(env);
-		Integer rvalue = (Integer) right.evaluate(env);
-		return operator.getOperator().evaluate(lvalue, rvalue);
+		return operator.getOperator().evaluate(env, left, right);
 	}
 
 	@Override
