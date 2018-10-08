@@ -13,8 +13,10 @@ public class JavawoccParser implements Parser {
 	public JavawoccParser() {
 		// factor = NUMBER | IDENTIFIER
 		// statement = factor (OPERATOR factor)
+		// statements = statement (TERMINATOR statement)
 
-		parser = new SequenceParser(new ChoiceParser(new NumberParser(), new IdentifierParser()), new OneToManyParser(new OperatorParser(), new NumberParser())) {
+		Parser factor = new ChoiceParser(new NumberParser(), new IdentifierParser());
+		Parser statement = new SequenceParser(factor, new OneToManyParser(new OperatorParser(), factor)) {
 
 			@Override
 			protected ASTNode build(ASTNodeList node) {
@@ -24,6 +26,12 @@ public class JavawoccParser implements Parser {
 				return resolver.resolve(list);
 			}
 
+		};
+		parser = new SequenceParser(statement, new OneToManyParser(new TerminatorParser(), statement)) {
+			@Override
+			protected ASTNode build(ASTNodeList node) {
+				return node;
+			}
 		};
 	}
 

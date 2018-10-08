@@ -59,4 +59,27 @@ class ParserTest {
 		node.evaluate(env);
 		assertEquals(3, env.get("a"));
 	}
+
+	@Test
+	void testMultipleStatementAndVariable() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("a = 1 + 2; a = a + 3"));
+		assertNotNull(node);
+		assertEquals("(a = (1 + 2))(a = (a + 3))", node.toString());
+		Environment env = new Environment();
+		node.evaluate(env);
+		assertEquals(6, env.get("a"));
+	}
+
+	@Test
+	void testMultipleStatementAndVariable2() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("a = 1 + 2; b = a + 3; c = b * 4; c"));
+		assertNotNull(node);
+		assertEquals("(a = (1 + 2))(b = (a + 3))(c = (b * 4))c", node.toString());
+		Environment env = new Environment();
+		Object actual = node.evaluate(env);
+		assertEquals(6, env.get("b"));
+		assertEquals(24, actual);
+	}
 }

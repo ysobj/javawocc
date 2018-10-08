@@ -19,8 +19,13 @@ public class ASTNodeList extends ASTNode {
 
 	@Override
 	public Object evaluate(Environment env) {
-		// TODO Auto-generated method stub
-		return null;
+		Object ret = null;
+		if (list != null) {
+			for (ASTNode astNode : list) {
+				ret = astNode.evaluate(env);
+			}
+		}
+		return ret;
 	}
 
 	@Override
@@ -33,7 +38,23 @@ public class ASTNodeList extends ASTNode {
 		this.list.add(node);
 	}
 
-	public List<ASTNode> getNodeList(){
+	public List<ASTNode> getNodeList() {
 		return list;
 	}
+
+	@Override
+	public String toString() {
+		if (list == null || list.size() == 0) {
+			return "";
+		}
+		StringBuilder sb = new StringBuilder();
+		for (ASTNode astNode : list) {
+			String tmp = astNode.toString();
+			if (tmp != null && tmp.length() > 0) {
+				sb.append(tmp);
+			}
+		}
+		return sb.toString();
+	}
+
 }

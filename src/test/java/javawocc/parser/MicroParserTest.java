@@ -75,4 +75,5 @@ class MicroParserTest {
 		Parser parser = new OneToManyParser(new NumberParser());
 		assertThrows(ParseException.class, () -> parser.parse(new Tokenizer("A")));
 	}
+
 }
