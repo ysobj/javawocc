@@ -66,16 +66,28 @@ class ParserTest {
 		ASTNode node = parser.parse(new Tokenizer("a = 1 + 2; a = a + 3;a"));
 		assertNotNull(node);
 		assertEquals("(a = (1 + 2))(a = (a + 3))a", node.toString());
+		StringBuilder expected = new StringBuilder();
 		// sipush 1
+		expected.append("110001");
 		// sipush 2
+		expected.append("110002");
 		// iadd
+		expected.append("60");
 		// istore_1
+		expected.append("3c");
 		//
 		// iload_1
+		expected.append("1b");
 		// sipush 3
+		expected.append("110003");
 		// iadd
+		expected.append("60");
 		// istore_1
+		expected.append("3c");
 		// iload_1
+		expected.append("1b");
+
+		assertEquals(expected.toString(), node.compile(new Environment()));
 
 		Environment env = new Environment();
 		node.evaluate(env);

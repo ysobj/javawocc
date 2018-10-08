@@ -17,8 +17,7 @@ public class Identifier extends ASTNode {
 
 	@Override
 	public String compile(Environment env) {
-		// TODO Auto-generated method stub
-		return null;
+		return "1b"; // iload_1 TODO adhoc implementation
 	}
 
 	@Override

@@ -30,8 +30,13 @@ public class ASTNodeList extends ASTNode {
 
 	@Override
 	public String compile(Environment env) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuilder sb = new StringBuilder();
+		if (list != null) {
+			for (ASTNode astNode : list) {
+				sb.append(astNode.compile(env));
+			}
+		}
+		return sb.toString();
 	}
 
 	public void add(ASTNode node) {

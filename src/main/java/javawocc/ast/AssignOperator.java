@@ -13,7 +13,10 @@ public class AssignOperator implements Operator {
 
 	@Override
 	public String compile(Environment env, ASTNode first, ASTNode second) {
-		return null;
+		StringBuilder sb = new StringBuilder();
+		sb.append(second.compile(env));
+		sb.append("3c"); // istore_1 TODO adhoc implementation
+		return sb.toString();
 	}
 
 	@Override
