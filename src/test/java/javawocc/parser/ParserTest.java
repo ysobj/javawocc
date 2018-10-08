@@ -102,7 +102,39 @@ class ParserTest {
 		assertEquals("(a = (1 + 2))(b = (a + 3))(c = (b * 4))c", node.toString());
 		Environment env = new Environment();
 		Object actual = node.evaluate(env);
+		StringBuilder expected = new StringBuilder();
+		// 110001
+		expected.append("110001");
+		// 110002
+		expected.append("110002");
+		// 60 iadd
+		expected.append("60");
+		// 3c istore_1
+		expected.append("3c");
+
+		// 1b iload_1
+		expected.append("1b");
+		// 110003
+		expected.append("110003");
+		// 60 iadd
+		expected.append("60");
+		// 3d istore_2
+		expected.append("3d");
+
+		// 1c iload_2
+		expected.append("1c");
+		// 110004
+		expected.append("110004");
+		// 68 imul
+		expected.append("68");
+		// 3e istore_3
+		expected.append("3e");
+
+		// 1d iload_3
+		expected.append("1d");
+
 		assertEquals(6, env.get("b"));
 		assertEquals(24, actual);
+		assertEquals(expected.toString(), node.compile(new Environment()));
 	}
 }

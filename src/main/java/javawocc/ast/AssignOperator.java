@@ -15,7 +15,8 @@ public class AssignOperator implements Operator {
 	public String compile(Environment env, ASTNode first, ASTNode second) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(second.compile(env));
-		sb.append("3c"); // istore_1 TODO adhoc implementation
+		Identifier id = (Identifier)first;
+		sb.append(id.compileLeftHandSide(env)); 
 		return sb.toString();
 	}
 
