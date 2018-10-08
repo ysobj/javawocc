@@ -12,8 +12,12 @@ class MultiplyOperator implements Operator {
 	}
 
 	@Override
-	public String compile() {
-		return "68";
+	public String compile(Environment env, ASTNode first, ASTNode second) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(first.compile(env));
+		sb.append(second.compile(env));
+		sb.append("68");
+		return sb.toString();
 	}
 
 	@Override

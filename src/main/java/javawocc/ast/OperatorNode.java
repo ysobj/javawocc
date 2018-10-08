@@ -34,8 +34,9 @@ public class OperatorNode extends ASTNode {
 	}
 
 	@Override
-	public String compile() {
-		return this.operator.compile();
+	public String compile(Environment env) {
+		// UnsupportedOperationException is a member of java collection framework...
+		throw new UnsupportedOperationException();
 	}
 
 	public Operator getOperator() {
@@ -55,7 +56,7 @@ public class OperatorNode extends ASTNode {
 		if (this.getOrder() > other.getOrder()) {
 			return true;
 		}
-		if (this.getOrder() == other.getOrder()){
+		if (this.getOrder() == other.getOrder()) {
 			return !this.isTypeRight();
 		}
 		return false;

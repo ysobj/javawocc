@@ -12,8 +12,12 @@ class DivideOperator implements Operator {
 	}
 
 	@Override
-	public String compile() {
-		return "6c";
+	public String compile(Environment env, ASTNode first, ASTNode second) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(first.compile(env));
+		sb.append(second.compile(env));
+		sb.append("6c");
+		return sb.toString();
 	}
 
 	@Override

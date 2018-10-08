@@ -12,7 +12,7 @@ public class AssignOperator implements Operator {
 	}
 
 	@Override
-	public String compile() {
+	public String compile(Environment env, ASTNode first, ASTNode second) {
 		return null;
 	}
 

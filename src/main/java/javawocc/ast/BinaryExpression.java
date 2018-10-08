@@ -20,12 +20,8 @@ public class BinaryExpression extends ASTNode {
 	}
 
 	@Override
-	public String compile() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(left.compile());
-		sb.append(right.compile());
-		sb.append(operator.compile());
-		return sb.toString();
+	public String compile(Environment env) {
+		return operator.getOperator().compile(env, left, right);
 	}
 
 	@Override

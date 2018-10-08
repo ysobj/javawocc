@@ -13,7 +13,7 @@ class ASTNodeTest {
 		NumberLiteral num = new NumberLiteral("123");
 		Environment env = new Environment();
 		assertEquals(123, num.evaluate(env));
-		assertEquals("11007b", num.compile());
+		assertEquals("11007b", num.compile(env));
 		assertEquals("123", num.toString());
 	}
 	
@@ -33,8 +33,8 @@ class ASTNodeTest {
 		assertEquals("(123 + 234)", target.toString());
 		BinaryExpression target2 = new BinaryExpression(right, new OperatorNode("-"), left);
 		assertEquals(111, target2.evaluate(env));
-		assertEquals("11007b1100ea60", target.compile());
-		assertEquals("1100ea11007b64", target2.compile());
+		assertEquals("11007b1100ea60", target.compile(env));
+		assertEquals("1100ea11007b64", target2.compile(env));
 	}
 
 	@Test

@@ -68,7 +68,7 @@ public class MethodInfoBuilder {
 
 		CodeAttributeInfo codeAttribute = new CodeAttributeInfo(code);
 		codeAttribute.setMaxStack(4);
-		codeAttribute.setMaxLocals(1);
+		codeAttribute.setMaxLocals(2);
 		codeAttribute.setCode( //
 				"b2" + String.format("%04x", f1.getIndex()) // getstatic #2
 						+ convertStatement(statement) + "b6" + String.format("%04x", m2.getIndex()) // invokevirtual #4
@@ -83,9 +83,34 @@ public class MethodInfoBuilder {
 	}
 
 	protected String convertStatement(String statement) throws Exception {
-		Parser javawoccParser = new JavawoccParser();
-		ASTNode node = javawoccParser.parse(new Tokenizer(statement));
-		System.out.println(node.compile());
-		return node.compile();
+		StringBuilder sb = new StringBuilder();
+		// sipush 1
+		sb.append("11"); // sipush
+		sb.append(String.format("%04x", 1));
+		// sipush 2
+		sb.append("11"); // sipush
+		sb.append(String.format("%04x", 2));
+		// iadd
+		sb.append("60");
+		// istore_1
+		sb.append("3c");
+		//
+		// iload_1
+		sb.append("1b");
+		// sipush 3
+		sb.append("11"); // sipush
+		sb.append(String.format("%04x", 3));
+		// iadd
+		sb.append("60");
+		// istore_1
+		sb.append("3c");
+		// iload_1
+		sb.append("1b");
+		System.out.println(sb.toString());
+		return sb.toString();
+		// Parser javawoccParser = new JavawoccParser();
+		// ASTNode node = javawoccParser.parse(new Tokenizer(statement));
+		// System.out.println(node.compile());
+		// return node.compile();
 	}
 }
