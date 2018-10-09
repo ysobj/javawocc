@@ -11,7 +11,7 @@ import javawocc.tokenizer.Tokenizer;
 class TokenizerTest {
 	@Test
 	void testSimpleCase() {
-		Tokenizer tokenizer = new Tokenizer("a = 1234 +   5678; b = 123");
+		Tokenizer tokenizer = new Tokenizer("a = 1234 +   5678; bc = 123");
 		//
 		assertTrue(tokenizer.hasNext());
 		Token token = tokenizer.next();
@@ -52,7 +52,7 @@ class TokenizerTest {
 		assertTrue(tokenizer.hasNext());
 		token = tokenizer.next();
 		assertNotNull(token);
-		assertEquals("b", token.getOriginal());
+		assertEquals("bc", token.getOriginal());
 		assertEquals(TokenType.IDENTIFIER, token.getType());
 		//
 		assertTrue(tokenizer.hasNext());
@@ -83,4 +83,74 @@ class TokenizerTest {
 		assertEquals(TokenType.NUMBER, token.getType());
 	}
 
+	@Test
+	void testKeyword() {
+		Tokenizer tokenizer = new Tokenizer("if(a == 1){ b = 2 }");
+		//
+		assertTrue(tokenizer.hasNext());
+		Token token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("if", token.getOriginal());
+		assertEquals(TokenType.KEYWORD, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("(", token.getOriginal());
+		assertEquals(TokenType.PAREN_OPEN, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("a", token.getOriginal());
+		assertEquals(TokenType.IDENTIFIER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("==", token.getOriginal());
+		assertEquals(TokenType.OPERATOR, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("1", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals(")", token.getOriginal());
+		assertEquals(TokenType.PAREN_CLOSE, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("{", token.getOriginal());
+		assertEquals(TokenType.BRACE_OPEN, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("b", token.getOriginal());
+		assertEquals(TokenType.IDENTIFIER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("==", token.getOriginal());
+		assertEquals(TokenType.OPERATOR, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("2", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("}", token.getOriginal());
+		assertEquals(TokenType.BRACE_CLOSE, token.getType());
+	}
 }
