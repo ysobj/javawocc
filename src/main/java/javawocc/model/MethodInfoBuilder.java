@@ -68,7 +68,7 @@ public class MethodInfoBuilder {
 
 		CodeAttributeInfo codeAttribute = new CodeAttributeInfo(code);
 		codeAttribute.setMaxStack(4);
-		codeAttribute.setMaxLocals(2);
+		codeAttribute.setMaxLocals(4);
 		codeAttribute.setCode( //
 				"b2" + String.format("%04x", f1.getIndex()) // getstatic #2
 						+ convertStatement(statement) + "b6" + String.format("%04x", m2.getIndex()) // invokevirtual #4

@@ -51,6 +51,10 @@ public class Tokenizer {
 				int r = is.read();
 				switch (r) {
 				case ';':
+				case '(':
+				case ')':
+				case '{':
+				case '}':
 					buffer = r;
 				case ' ':
 					if (sb.length() > 0) {
@@ -94,8 +98,23 @@ public class Tokenizer {
 		if (x == ';') {
 			return TokenType.TERMINATOR;
 		}
-		if (in(string, "+", "-", "*", "/", "=")) {
+		if (in(string, "+", "-", "*", "/", "=", "==")) {
 			return TokenType.OPERATOR;
+		}
+		if (in(string, "if")) {
+			return TokenType.KEYWORD;
+		}
+		if (x == '(') {
+			return TokenType.PAREN_OPEN;
+		}
+		if (x == ')') {
+			return TokenType.PAREN_CLOSE;
+		}
+		if (x == '{') {
+			return TokenType.BRACE_OPEN;
+		}
+		if (x == '}') {
+			return TokenType.BRACE_CLOSE;
 		}
 		return TokenType.IDENTIFIER;
 	}
