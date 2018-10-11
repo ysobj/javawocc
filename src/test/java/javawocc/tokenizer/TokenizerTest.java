@@ -138,7 +138,7 @@ class TokenizerTest {
 		assertTrue(tokenizer.hasNext());
 		token = tokenizer.next();
 		assertNotNull(token);
-		assertEquals("==", token.getOriginal());
+		assertEquals("=", token.getOriginal());
 		assertEquals(TokenType.OPERATOR, token.getType());
 		//
 		assertTrue(tokenizer.hasNext());

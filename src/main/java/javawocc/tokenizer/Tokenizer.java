@@ -40,11 +40,11 @@ public class Tokenizer {
 			this.preloaded = null;
 			return t;
 		}
-		if (buffer != null) {
-			char tmp = (char) buffer.intValue();
-			buffer = null;
-			return createToken("" + tmp);
-		}
+//		if (buffer != null) {
+//			char tmp = (char) buffer.intValue();
+//			buffer = null;
+//			return createToken("" + tmp);
+//		}
 		try {
 			StringBuilder sb = new StringBuilder();
 			while (true) {
@@ -55,12 +55,32 @@ public class Tokenizer {
 				case ')':
 				case '{':
 				case '}':
-					buffer = r;
-				case ' ':
-					if (sb.length() > 0) {
-						return createToken(sb.toString());
+				case '+':
+				case '-':
+				case '*':
+				case '/':
+					return createToken("" + (char) r);
+				case '=':
+					is.mark(1);
+					int r2 = is.read();
+					if ((char) r2 == '=') {
+						return createToken("==");
 					}
+					is.reset();
+					return createToken("=");
+				case ' ':
 					break;
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+					return createNumberToken(r, is);
 				case -1:
 					if (sb.length() == 0) {
 						this.preloaded = EOS;
@@ -68,7 +88,7 @@ public class Tokenizer {
 					}
 					return createToken(sb.toString());
 				default:
-					sb.append((char) r);
+					return createIdToken(r, is);
 				}
 			}
 		} catch (IOException e) {
@@ -76,6 +96,48 @@ public class Tokenizer {
 			e.printStackTrace();
 		}
 		return new Token("1234", TokenType.NUMBER);
+	}
+
+	private Token createIdToken(int r, Reader is2) {
+		StringBuilder sb = new StringBuilder();
+		sb.append((char) r);
+		try {
+			is.mark(1);
+			r = is.read();
+			while (!in(r, ';', '(', ')', '{', '}', '+', '-', '*', '/', ' ', '=')) {
+				sb.append((char) r);
+				is.mark(1);
+				r = is.read();
+			}
+			is.reset();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String origin = sb.toString();
+		if ("if".equals(origin)) {
+			return new Token(origin, TokenType.KEYWORD);
+		}
+		return new Token(origin, TokenType.IDENTIFIER);
+	}
+
+	private Token createNumberToken(int r, Reader is) {
+		StringBuilder sb = new StringBuilder();
+		sb.append((char) r);
+		try {
+			is.mark(1);
+			r = is.read();
+			while (r >= '0' && r <= '9') {
+				sb.append((char) r);
+				is.mark(1);
+				r = is.read();
+			}
+			is.reset();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new Token(sb.toString(), TokenType.NUMBER);
 	}
 
 	public Token peek() {
@@ -121,5 +183,9 @@ public class Tokenizer {
 
 	private boolean in(String obj, String... candidates) {
 		return Arrays.stream(candidates).anyMatch((c) -> obj.equals(c));
+	}
+
+	private boolean in(int obj, int... candidates) {
+		return Arrays.stream(candidates).anyMatch((c) -> obj == c);
 	}
 }
