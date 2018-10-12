@@ -40,11 +40,11 @@ public class Tokenizer {
 			this.preloaded = null;
 			return t;
 		}
-//		if (buffer != null) {
-//			char tmp = (char) buffer.intValue();
-//			buffer = null;
-//			return createToken("" + tmp);
-//		}
+		// if (buffer != null) {
+		// char tmp = (char) buffer.intValue();
+		// buffer = null;
+		// return createToken("" + tmp);
+		// }
 		try {
 			StringBuilder sb = new StringBuilder();
 			while (true) {
@@ -104,7 +104,7 @@ public class Tokenizer {
 		try {
 			is.mark(1);
 			r = is.read();
-			while (!in(r, ';', '(', ')', '{', '}', '+', '-', '*', '/', ' ', '=')) {
+			while (!in(r, ';', '(', ')', '{', '}', '+', '-', '*', '/', ' ', '=') && r != -1) {
 				sb.append((char) r);
 				is.mark(1);
 				r = is.read();
