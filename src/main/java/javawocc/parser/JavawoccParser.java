@@ -17,6 +17,8 @@ public class JavawoccParser implements Parser {
 		// block = "{" statement "}"
 		// if_statement = "if" parentheses_expression block
 		// statement = expression (TERMINATOR expression)
+		// statements = statement TERMINATOR | if_statement
+		// program = statements *
 
 		Parser factor = new ChoiceParser(new NumberParser(), new IdentifierParser());
 		Parser expression = new SequenceParser(factor, new OneToManyParser(new OperatorParser(), factor)) {
@@ -30,12 +32,17 @@ public class JavawoccParser implements Parser {
 			}
 
 		};
-		parser = new SequenceParser(expression, new OneToManyParser(new TerminatorParser(), expression)) {
+		Parser parenthesesExpression = new SequenceParser(new MatchParser("("), expression, new MatchParser(")"));
+		Parser statement = new SequenceParser(expression, new OneToManyParser(new TerminatorParser(), expression)) {
 			@Override
 			protected ASTNode build(ASTNodeList node) {
 				return node;
 			}
 		};
+		Parser block = new SequenceParser(new MatchParser("{"), statement, new MatchParser("}"));
+		Parser ifStatement = new SequenceParser(new MatchParser("if"), parenthesesExpression, block);
+		Parser statements = new ChoiceParser(new SequenceParser(statement, new TerminatorParser()), ifStatement);
+		parser = new OneToManyParser(statements);
 	}
 
 	@Override

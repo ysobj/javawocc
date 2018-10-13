@@ -1,5 +1,7 @@
 package javawocc.parser;
 
+import java.util.Arrays;
+
 import javawocc.ast.ASTNode;
 import javawocc.ast.ASTNodeList;
 import javawocc.tokenizer.Tokenizer;
@@ -24,7 +26,7 @@ public class OneToManyParser implements Parser {
 				}
 			}
 		} catch (ParseException e) {
-			if(list.getNodeList().size() == 0) {
+			if (list.getNodeList().size() == 0) {
 				throw e;
 			}
 		}
@@ -34,4 +36,10 @@ public class OneToManyParser implements Parser {
 	protected ASTNode build(ASTNodeList node) {
 		return node;
 	}
+
+	@Override
+	public String toString() {
+		return Arrays.toString(parsers);
+	}
+
 }

@@ -18,4 +18,9 @@ public class OperatorParser implements Parser {
 		return new OperatorNode(token);
 	}
 
+	@Override
+	public String toString() {
+		return "OPERATOR";
+	}
+
 }

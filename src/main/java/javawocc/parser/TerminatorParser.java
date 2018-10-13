@@ -17,4 +17,9 @@ public class TerminatorParser implements Parser {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "TERMINATOR";
+	}
+
 }

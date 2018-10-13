@@ -25,4 +25,10 @@ public class IdentifierParser implements Parser {
 	protected ASTNode build(Token token) {
 		return new Identifier(token);
 	}
+
+	@Override
+	public String toString() {
+		return "IDENTIFIER";
+	}
+
 }

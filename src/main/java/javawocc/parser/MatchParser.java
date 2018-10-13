@@ -13,7 +13,6 @@ public class MatchParser implements Parser {
 		this.original = original;
 	}
 
-
 	@Override
 	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		Token token = tokenizer.peek();
@@ -26,6 +25,11 @@ public class MatchParser implements Parser {
 
 	protected ASTNode build(Token token) {
 		return new Identifier(token);
+	}
+
+	@Override
+	public String toString() {
+		return original;
 	}
 
 }

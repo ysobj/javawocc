@@ -1,5 +1,7 @@
 package javawocc.parser;
 
+import java.util.Arrays;
+
 import javawocc.ast.ASTNode;
 import javawocc.ast.ASTNodeList;
 import javawocc.tokenizer.Tokenizer;
@@ -27,4 +29,8 @@ public class SequenceParser implements Parser {
 		return node;
 	}
 
+	@Override
+	public String toString() {
+		return Arrays.toString(parsers);
+	}
 }

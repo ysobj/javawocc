@@ -1,5 +1,7 @@
 package javawocc.parser;
 
+import java.util.Arrays;
+
 import javawocc.ast.ASTNode;
 import javawocc.tokenizer.Tokenizer;
 
@@ -22,6 +24,18 @@ public class ChoiceParser implements Parser {
 			}
 		}
 		throw new ParseException();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (Parser parser : parsers) {
+			if(sb.length() > 0) {
+				sb.append("|");
+			}
+			sb.append(parser.toString());
+		}
+		return sb.toString();
 	}
 
 }

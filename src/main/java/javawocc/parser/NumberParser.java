@@ -18,4 +18,9 @@ public class NumberParser implements Parser {
 		return new NumberLiteral(token);
 	}
 
+	@Override
+	public String toString() {
+		return "NUMBER";
+	}
+
 }
