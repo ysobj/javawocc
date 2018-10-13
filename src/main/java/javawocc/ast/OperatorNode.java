@@ -1,12 +1,14 @@
 package javawocc.ast;
 
 import javawocc.model.Environment;
+import javawocc.tokenizer.Token;
 
 public class OperatorNode extends ASTNode {
 	private Operator operator;
 
-	public OperatorNode(String operator) {
-		switch (operator) {
+	public OperatorNode(Token token) {
+		super(token);
+		switch (token.getOriginal()) {
 		case "+":
 			this.operator = new PlusOperator();
 			break;

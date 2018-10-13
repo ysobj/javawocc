@@ -1,12 +1,14 @@
 package javawocc.ast;
 
 import javawocc.model.Environment;
+import javawocc.tokenizer.Token;
 
 public class NumberLiteral extends ASTNode {
 	private Integer value;
 
-	public NumberLiteral(String value) {
-		this.value = Integer.parseInt(value);
+	public NumberLiteral(Token token) {
+		super(token);
+		this.value = Integer.parseInt(token.getOriginal());
 	}
 
 	@Override

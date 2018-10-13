@@ -9,7 +9,7 @@ public class ASTNodeList extends ASTNode {
 	private List<ASTNode> list;
 
 	public ASTNodeList(List<ASTNode> list) {
-		super();
+		super(null);
 		this.list = list;
 	}
 

@@ -137,4 +137,22 @@ class ParserTest {
 		assertEquals(24, actual);
 		assertEquals(expected.toString(), node.compile(new Environment()));
 	}
+
+	@Test
+	void testIfStatement() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("a = 3; b=4;if(a == 3){b=5}b"));
+		assertNotNull(node);
+		assertEquals("(a = 3)(b = 4)if(a == 3){b = 5}b", node.toString());
+	}
+	
+	@Test
+	void testMatchParser() throws Exception {
+		Parser parser = new MatchParser("(");
+		ASTNode node = parser.parse(new Tokenizer("("));
+		assertNotNull(node);
+		assertThrows(ParseException.class, ()->{
+			parser.parse(new Tokenizer("a"));
+		});
+	}
 }

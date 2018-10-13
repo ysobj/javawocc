@@ -6,16 +6,18 @@ import javawocc.tokenizer.Token;
 import javawocc.tokenizer.Tokenizer;
 import javawocc.tokenizer.Token.TokenType;
 
-public class IdentifierParser implements Parser {
+public class MatchParser implements Parser {
+	private String original;
 
-	public IdentifierParser() {
-		// TODO Auto-generated constructor stub
+	public MatchParser(String original) {
+		this.original = original;
 	}
+
 
 	@Override
 	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		Token token = tokenizer.peek();
-		if (token == null || token.getType() == TokenType.EOS || token.getType() != TokenType.IDENTIFIER) {
+		if (token == null || token.getType() == TokenType.EOS || !original.equals(token.getOriginal())) {
 			throw new ParseException();
 		}
 		token = tokenizer.next();
@@ -25,4 +27,5 @@ public class IdentifierParser implements Parser {
 	protected ASTNode build(Token token) {
 		return new Identifier(token);
 	}
+
 }

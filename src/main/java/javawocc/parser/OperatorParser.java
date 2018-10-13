@@ -15,7 +15,7 @@ public class OperatorParser implements Parser {
 			return null;
 		}
 		token = tokenizer.next();
-		return new OperatorNode(token.getOriginal());
+		return new OperatorNode(token);
 	}
 
 }

@@ -15,7 +15,7 @@ public class NumberParser implements Parser {
 			throw new ParseException();
 		}
 		token = tokenizer.next();
-		return new NumberLiteral(token.getOriginal());
+		return new NumberLiteral(token);
 	}
 
 }

@@ -8,7 +8,7 @@ public class BinaryExpression extends ASTNode {
 	private OperatorNode operator;
 
 	public BinaryExpression(ASTNode left, OperatorNode operator, ASTNode right) {
-		super();
+		super(null);
 		this.left = left;
 		this.operator = operator;
 		this.right = right;

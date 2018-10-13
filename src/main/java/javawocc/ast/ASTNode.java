@@ -1,9 +1,21 @@
 package javawocc.ast;
 
 import javawocc.model.Environment;
+import javawocc.tokenizer.Token;
 
-public abstract class ASTNode {
-	public abstract Object evaluate(Environment env);
+public class ASTNode {
+	protected Token token;
 
-	public abstract String compile(Environment env);
+	public ASTNode(Token token) {
+		super();
+		this.token = token;
+	}
+
+	public Object evaluate(Environment env) {
+		return null;
+	}
+
+	public String compile(Environment env) {
+		return null;
+	}
 }

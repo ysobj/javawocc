@@ -2,6 +2,9 @@ package javawocc.ast;
 
 import java.util.List;
 
+import javawocc.tokenizer.Token;
+import javawocc.tokenizer.Token.TokenType;
+
 public class OperatorPrecedenceResolver {
 
 	public ASTNode resolve(List<ASTNode> list) {
@@ -53,7 +56,7 @@ public class OperatorPrecedenceResolver {
 		return right;
 	}
 
-	protected static OperatorNode NULL_OPERATOR = new OperatorNode("") {
+	protected static OperatorNode NULL_OPERATOR = new OperatorNode(new Token("", TokenType.EOS)) {
 
 		@Override
 		public boolean isHigherOrder(OperatorNode other) {

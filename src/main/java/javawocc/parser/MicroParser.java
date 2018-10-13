@@ -19,20 +19,20 @@ public class MicroParser implements Parser {
 				if (token.getType() != Token.TokenType.NUMBER) {
 					throw new IllegalArgumentException();
 				}
-				left = new NumberLiteral(token.getOriginal());
+				left = new NumberLiteral(token);
 				continue;
 			}
 			if (mid == null) {
 				if (token.getType() != Token.TokenType.OPERATOR) {
 					throw new IllegalArgumentException();
 				}
-				mid = new OperatorNode(token.getOriginal());
+				mid = new OperatorNode(token);
 				continue;
 			}
 			if (token.getType() != Token.TokenType.NUMBER) {
 				throw new IllegalArgumentException();
 			}
-			left = new BinaryExpression(left, mid, new NumberLiteral(token.getOriginal()));
+			left = new BinaryExpression(left, mid, new NumberLiteral(token));
 			mid = null;
 		}
 		if (mid != null) {

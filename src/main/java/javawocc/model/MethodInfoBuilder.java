@@ -1,24 +1,12 @@
 package javawocc.model;
 
-import java.util.List;
-
 import javawocc.ast.ASTNode;
-import javawocc.ast.ASTNodeList;
-import javawocc.ast.BinaryExpression;
-import javawocc.ast.NumberLiteral;
-import javawocc.ast.OperatorNode;
-import javawocc.ast.OperatorPrecedenceResolver;
 import javawocc.constant.Constant;
 import javawocc.constant.FieldRef;
 import javawocc.constant.MethodRef;
 import javawocc.constant.UTF8Constant;
 import javawocc.parser.JavawoccParser;
-import javawocc.parser.MicroParser;
-import javawocc.parser.NumberParser;
-import javawocc.parser.OneToManyParser;
-import javawocc.parser.OperatorParser;
 import javawocc.parser.Parser;
-import javawocc.parser.SequenceParser;
 import javawocc.tokenizer.Tokenizer;
 
 public class MethodInfoBuilder {
