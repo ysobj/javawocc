@@ -11,7 +11,7 @@ public class TerminatorParser implements Parser {
 	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		Token token = tokenizer.peek();
 		if (token == null || token.getType() == TokenType.EOS || token.getType() != TokenType.TERMINATOR) {
-			throw new ParseException();
+			throw new ParseException(token);
 		}
 		token = tokenizer.next();
 		return null;

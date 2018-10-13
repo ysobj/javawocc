@@ -23,14 +23,14 @@ public class ChoiceParser implements Parser {
 			} catch (ParseException e) {
 			}
 		}
-		throw new ParseException();
+		throw new ParseException(tokenizer.next());
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (Parser parser : parsers) {
-			if(sb.length() > 0) {
+			if (sb.length() > 0) {
 				sb.append("|");
 			}
 			sb.append(parser.toString());

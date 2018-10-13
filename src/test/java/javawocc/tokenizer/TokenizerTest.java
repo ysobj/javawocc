@@ -153,4 +153,27 @@ class TokenizerTest {
 		assertEquals("}", token.getOriginal());
 		assertEquals(TokenType.BRACE_CLOSE, token.getType());
 	}
+
+	@Test
+	void testNotSeparatedWithSpace() {
+		Tokenizer tokenizer = new Tokenizer("a=1");
+		assertTrue(tokenizer.hasNext());
+		Token token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("a", token.getOriginal());
+		assertEquals(TokenType.IDENTIFIER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("=", token.getOriginal());
+		assertEquals(TokenType.OPERATOR, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("1", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
+	}
+
 }

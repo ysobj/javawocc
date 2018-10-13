@@ -31,6 +31,13 @@ public class SequenceParser implements Parser {
 
 	@Override
 	public String toString() {
-		return Arrays.toString(parsers);
+		StringBuilder sb = new StringBuilder();
+		for (Parser parser : parsers) {
+			if (sb.length() > 0) {
+				sb.append(" ");
+			}
+			sb.append(parser.toString());
+		}
+		return sb.toString();
 	}
 }

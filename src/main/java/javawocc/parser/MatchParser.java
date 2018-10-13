@@ -17,7 +17,7 @@ public class MatchParser implements Parser {
 	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		Token token = tokenizer.peek();
 		if (token == null || token.getType() == TokenType.EOS || !original.equals(token.getOriginal())) {
-			throw new ParseException();
+			throw new ParseException(token);
 		}
 		token = tokenizer.next();
 		return build(token);

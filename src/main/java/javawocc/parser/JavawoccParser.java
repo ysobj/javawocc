@@ -20,7 +20,11 @@ public class JavawoccParser implements Parser {
 		// statements = statement TERMINATOR | if_statement
 		// program = statements *
 
-		Parser factor = new ChoiceParser(new NumberParser(), new IdentifierParser());
+		Parser factor = new ChoiceParser(new NumberParser(), new IdentifierParser()) {
+			public String toString() {
+				return "factor";
+			}
+		};
 		Parser expression = new SequenceParser(factor, new OneToManyParser(new OperatorParser(), factor)) {
 
 			@Override
@@ -38,6 +42,11 @@ public class JavawoccParser implements Parser {
 			protected ASTNode build(ASTNodeList node) {
 				return node;
 			}
+
+			@Override
+			public String toString() {
+				return "statement";
+			}
 		};
 		Parser block = new SequenceParser(new MatchParser("{"), statement, new MatchParser("}"));
 		Parser ifStatement = new SequenceParser(new MatchParser("if"), parenthesesExpression, block);
@@ -48,6 +57,11 @@ public class JavawoccParser implements Parser {
 	@Override
 	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		return parser.parse(tokenizer);
+	}
+
+	@Override
+	public String toString() {
+		return parser.toString();
 	}
 
 }
