@@ -10,7 +10,6 @@ import javawocc.tokenizer.Token.TokenType;
 public class Tokenizer {
 	private Reader is;
 	private Token preloaded;
-	private Integer buffer;
 	private static final Token EOS = new Token("", TokenType.EOS);
 
 	public Tokenizer(String string) {

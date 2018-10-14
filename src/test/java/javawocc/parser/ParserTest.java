@@ -58,4 +58,25 @@ class ParserTest {
 			parser.parse(new Tokenizer("a"));
 		});
 	}
+	
+	@Test
+	void testOneToManyParser() throws Exception{
+		Parser parser = new OneToManyParser(new MatchParser("a"));
+		ASTNode node = parser.parse(new Tokenizer("a a a a"));
+		assertNotNull(node);
+		node = parser.parse(new Tokenizer("a a a b"));
+		assertNotNull(node);
+	}
+	
+	@Test
+	void testOneToManyParser2() throws Exception{
+		Parser parser = new OneToManyParser(new SequenceParser(new MatchParser("a"),new MatchParser("b"),new MatchParser("c")));
+		ASTNode node = parser.parse(new Tokenizer("a b c"));
+		assertNotNull(node);
+		node = parser.parse(new Tokenizer("a b c a b c"));
+		assertNotNull(node);
+		assertThrows(ParseException.class, ()->{
+			parser.parse(new Tokenizer("a b"));
+		});
+	}
 }

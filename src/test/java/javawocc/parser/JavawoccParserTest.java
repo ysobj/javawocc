@@ -24,9 +24,9 @@ class JavawoccParserTest {
 	@Test
 	void testMultipleStatementAndVariable() throws Exception {
 		JavawoccParser parser = new JavawoccParser();
-		ASTNode node = parser.parse(new Tokenizer("a = 1 + 2; a = a + 3;a"));
+		ASTNode node = parser.parse(new Tokenizer("a = 1 + 2; a = a + 3;"));
 		assertNotNull(node);
-		assertEquals("(a = (1 + 2))(a = (a + 3))a", node.toString());
+		assertEquals("(a = (1 + 2))(a = (a + 3))", node.toString());
 		StringBuilder expected = new StringBuilder();
 		// sipush 1
 		expected.append("110001");
@@ -45,8 +45,6 @@ class JavawoccParserTest {
 		expected.append("60");
 		// istore_1
 		expected.append("3c");
-		// iload_1
-		expected.append("1b");
 
 		assertEquals(expected.toString(), node.compile(new Environment()));
 
