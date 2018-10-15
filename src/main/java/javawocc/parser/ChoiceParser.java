@@ -1,7 +1,5 @@
 package javawocc.parser;
 
-import java.util.Arrays;
-
 import javawocc.ast.ASTNode;
 import javawocc.tokenizer.Tokenizer;
 
@@ -23,7 +21,7 @@ public class ChoiceParser implements Parser {
 			} catch (ParseException e) {
 			}
 		}
-		throw new ParseException(tokenizer.next());
+		throw new ParseException(toString(), tokenizer.next());
 	}
 
 	@Override

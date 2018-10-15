@@ -27,8 +27,7 @@ class ParserTest {
 		ASTNode node = parser.parse(new Tokenizer("+"));
 		assertNotNull(node);
 		assertEquals(OperatorNode.class, node.getClass());
-		node = parser.parse(new Tokenizer("123"));
-		assertNull(node);
+		assertThrows(ParseException.class, () -> parser.parse(new Tokenizer("123")));
 	}
 
 	@Test
