@@ -5,6 +5,7 @@ import java.util.List;
 import javawocc.ast.ASTNode;
 import javawocc.ast.ASTNodeList;
 import javawocc.ast.OperatorPrecedenceResolver;
+import javawocc.parser.ParenthesesParser.Type;
 import javawocc.tokenizer.Tokenizer;
 
 public class JavawoccParser implements Parser {
@@ -36,7 +37,8 @@ public class JavawoccParser implements Parser {
 			}
 
 		};
-		Parser parenthesesExpression = new SequenceParser(new MatchParser("("), expression, new MatchParser(")"));
+//		Parser parenthesesExpression = new SequenceParser(new MatchParser("("), expression, new MatchParser(")"));
+		Parser parenthesesExpression = new ParenthesesParser(Type.PAREN, expression);
 		Parser statement = new SequenceParser(expression, new OneToManyParser(new TerminatorParser(), expression)) {
 			@Override
 			protected ASTNode build(ASTNodeList node) {
@@ -48,7 +50,8 @@ public class JavawoccParser implements Parser {
 				return "statement";
 			}
 		};
-		Parser block = new SequenceParser(new MatchParser("{"), statement, new MatchParser("}"));
+//		Parser block = new SequenceParser(new MatchParser("{"), statement, new MatchParser("}"));
+		Parser block = new ParenthesesParser(Type.BRACE, statement);
 		Parser ifStatement = new SequenceParser(new MatchParser("if"), parenthesesExpression, block);
 		Parser statements = new ChoiceParser(new SequenceParser(statement, new TerminatorParser()), ifStatement);
 		parser = new OneToManyParser(statements);
