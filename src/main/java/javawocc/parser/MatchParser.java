@@ -1,7 +1,6 @@
 package javawocc.parser;
 
 import javawocc.ast.ASTNode;
-import javawocc.ast.Identifier;
 import javawocc.ast.Keyword;
 import javawocc.tokenizer.Token;
 import javawocc.tokenizer.Tokenizer;
@@ -17,8 +16,7 @@ public class MatchParser implements Parser {
 	@Override
 	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		Token token = tokenizer.peek();
-		if (token == null || token.getType() != TokenType.KEYWORD
-				|| !original.equals(token.getOriginal())) {
+		if (token == null || token.getType() != TokenType.KEYWORD || !original.equals(token.getOriginal())) {
 			throw new ParseException(this.original, token);
 		}
 		token = tokenizer.next();

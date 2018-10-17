@@ -47,34 +47,35 @@ class ParserTest {
 		assertNotNull(parser.parse(new Tokenizer("+")));
 		assertThrows(ParseException.class, () -> parser.parse(new Tokenizer("a")));
 	}
-	
+
 	@Test
 	void testMatchParser() throws Exception {
-		Parser parser = new MatchParser("(");
-		ASTNode node = parser.parse(new Tokenizer("("));
+		Parser parser = new MatchParser("if");
+		ASTNode node = parser.parse(new Tokenizer("if"));
 		assertNotNull(node);
-		assertThrows(ParseException.class, ()->{
+		assertThrows(ParseException.class, () -> {
 			parser.parse(new Tokenizer("a"));
 		});
 	}
-	
+
 	@Test
-	void testOneToManyParser() throws Exception{
-		Parser parser = new OneToManyParser(new MatchParser("a"));
+	void testOneToManyParser() throws Exception {
+		Parser parser = new OneToManyParser(new IdentifierParser());
 		ASTNode node = parser.parse(new Tokenizer("a a a a"));
 		assertNotNull(node);
-		node = parser.parse(new Tokenizer("a a a b"));
+		node = parser.parse(new Tokenizer("a a a 1"));
 		assertNotNull(node);
 	}
-	
+
 	@Test
-	void testOneToManyParser2() throws Exception{
-		Parser parser = new OneToManyParser(new SequenceParser(new MatchParser("a"),new MatchParser("b"),new MatchParser("c")));
+	void testOneToManyParser2() throws Exception {
+		Parser parser = new OneToManyParser(
+				new SequenceParser(new IdentifierParser(), new IdentifierParser(), new IdentifierParser()));
 		ASTNode node = parser.parse(new Tokenizer("a b c"));
 		assertNotNull(node);
 		node = parser.parse(new Tokenizer("a b c a b c"));
 		assertNotNull(node);
-		assertThrows(ParseException.class, ()->{
+		assertThrows(ParseException.class, () -> {
 			parser.parse(new Tokenizer("a b"));
 		});
 	}
