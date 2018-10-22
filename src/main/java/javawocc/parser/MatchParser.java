@@ -8,15 +8,17 @@ import javawocc.tokenizer.Token.TokenType;
 
 public class MatchParser implements Parser {
 	private String original;
+	private TokenType type;
 
-	public MatchParser(String original) {
+	public MatchParser(TokenType type, String original) {
 		this.original = original;
+		this.type = type;
 	}
 
 	@Override
 	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		Token token = tokenizer.peek();
-		if (token == null || token.getType() != TokenType.KEYWORD || !original.equals(token.getOriginal())) {
+		if (token == null || token.getType() != type || !original.equals(token.getOriginal())) {
 			throw new ParseException(this.original, token);
 		}
 		token = tokenizer.next();

@@ -2,11 +2,17 @@ package javawocc.parser;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 import javawocc.ast.ASTNode;
+import javawocc.ast.ASTNodeList;
+import javawocc.ast.OperatorPrecedenceResolver;
 import javawocc.model.Environment;
+import javawocc.parser.ParenthesesParser.Type;
 import javawocc.tokenizer.Tokenizer;
+import javawocc.tokenizer.Token.TokenType;
 
 class JavawoccParserTest {
 
@@ -103,5 +109,42 @@ class JavawoccParserTest {
 		ASTNode node = parser.parse(new Tokenizer("a = 3; b=4;if(a == 3){b=5}b"));
 		assertNotNull(node);
 		assertEquals("(a = 3)(b = 4)if(a == 3){b = 5}b", node.toString());
+	}
+
+	@Test
+	void testIfStatement2() throws Exception {
+		Parser factor = new ChoiceParser(new NumberParser(), new IdentifierParser()) {
+			public String toString() {
+				return "factor";
+			}
+		};
+		Parser expression = new SequenceParser(factor, new OneToManyParser(new OperatorParser(), factor)) {
+
+			@Override
+			protected ASTNode build(ASTNodeList node) {
+				List<ASTNode> list = node.getNodeList();
+				list.addAll(((ASTNodeList) list.remove(1)).getNodeList());
+				OperatorPrecedenceResolver resolver = new OperatorPrecedenceResolver();
+				return resolver.resolve(list);
+			}
+
+		};
+		Parser parenthesesExpression = new ParenthesesParser(Type.PAREN, expression);
+		Parser statement = new SequenceParser(expression, new OneToManyParser(new TerminatorParser(), expression)) {
+			@Override
+			protected ASTNode build(ASTNodeList node) {
+				return node;
+			}
+
+			@Override
+			public String toString() {
+				return "statement";
+			}
+		};
+		Parser block = new ParenthesesParser(Type.BRACE, statement);
+		Parser ifStatement = new SequenceParser(new MatchParser(TokenType.KEYWORD,"if"), parenthesesExpression, block);
+		ASTNode node = ifStatement.parse(new Tokenizer("if(a == 3){b=5}b"));
+		assertNotNull(node);
+
 	}
 }

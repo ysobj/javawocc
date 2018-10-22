@@ -8,6 +8,7 @@ import javawocc.ast.ASTNode;
 import javawocc.ast.OperatorNode;
 import javawocc.model.Environment;
 import javawocc.tokenizer.Tokenizer;
+import javawocc.tokenizer.Token.TokenType;
 
 class ParserTest {
 
@@ -50,7 +51,7 @@ class ParserTest {
 
 	@Test
 	void testMatchParser() throws Exception {
-		Parser parser = new MatchParser("if");
+		Parser parser = new MatchParser(TokenType.KEYWORD, "if");
 		ASTNode node = parser.parse(new Tokenizer("if"));
 		assertNotNull(node);
 		assertThrows(ParseException.class, () -> {
