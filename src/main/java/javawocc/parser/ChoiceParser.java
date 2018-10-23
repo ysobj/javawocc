@@ -21,7 +21,7 @@ public class ChoiceParser implements Parser {
 			} catch (ParseException e) {
 			}
 		}
-		throw new ParseException(toString(), tokenizer.next());
+		throw new ParseException(toString(), tokenizer.peek());
 	}
 
 	@Override

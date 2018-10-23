@@ -106,7 +106,8 @@ class JavawoccParserTest {
 	@Test
 	void testIfStatement() throws Exception {
 		JavawoccParser parser = new JavawoccParser();
-		ASTNode node = parser.parse(new Tokenizer("a = 3; b=4;if(a == 3){b=5}b"));
+//		ASTNode node = parser.parse(new Tokenizer("a = 3; b=4;if(a == 3){b=5}b"));
+		ASTNode node = parser.parse(new Tokenizer("if(a == 3){b=5}"));
 		assertNotNull(node);
 		assertEquals("(a = 3)(b = 4)if(a == 3){b = 5}b", node.toString());
 	}
