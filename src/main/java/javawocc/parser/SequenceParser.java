@@ -1,7 +1,5 @@
 package javawocc.parser;
 
-import java.util.Arrays;
-
 import javawocc.ast.ASTNode;
 import javawocc.ast.ASTNodeList;
 import javawocc.tokenizer.Tokenizer;
