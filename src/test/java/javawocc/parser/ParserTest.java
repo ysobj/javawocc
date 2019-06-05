@@ -8,6 +8,7 @@ import javawocc.ast.ASTNode;
 import javawocc.ast.OperatorNode;
 import javawocc.model.Environment;
 import javawocc.tokenizer.Tokenizer;
+import javawocc.tokenizer.Token;
 import javawocc.tokenizer.Token.TokenType;
 
 class ParserTest {
@@ -84,12 +85,19 @@ class ParserTest {
 		});
 	}
 
-	@Test
-	void testManyParser() throws Exception {
-		Parser parser = new ManyParser(new IdentifierParser());
-		ASTNode node = parser.parse(new Tokenizer("a"));
-		assertNotNull(node);
-		node = parser.parse(new Tokenizer("a b c"));
-		assertNotNull(node);
+	void testOneToManyParser3() throws Exception {
+		Parser parser = new SequenceParser(new IdentifierParser(),
+				new OneToManyParser(false, new NumberParser(), new IdentifierParser()));
+		ASTNode node = parser.parse(new Tokenizer("a 1 b"));
+		assertEquals("a1b", node.toString());
+		node = parser.parse(new Tokenizer("a 1 b 2 c"));
+		assertEquals("a1b2c", node.toString());
+		Tokenizer tokenizer = new Tokenizer("a b");
+		node = parser.parse(tokenizer);
+		assertEquals("a", node.toString());
+		assertTrue(tokenizer.hasNext());
+		Token token = tokenizer.next();
+		assertEquals("b", token.getOriginal());
 	}
+
 }

@@ -106,8 +106,8 @@ class JavawoccParserTest {
 	@Test
 	void testIfStatement() throws Exception {
 		JavawoccParser parser = new JavawoccParser();
-//		ASTNode node = parser.parse(new Tokenizer("a = 3; b=4;if(a == 3){b=5}b"));
-		ASTNode node = parser.parse(new Tokenizer("if(a == 3){b=5}"));
+		ASTNode node = parser.parse(new Tokenizer("a = 3; b=4;if(a == 3){b=5}b"));
+//		ASTNode node = parser.parse(new Tokenizer("if(a == 3){b=5}"));
 		assertNotNull(node);
 		assertEquals("(a = 3)(b = 4)if(a == 3){b = 5}b", node.toString());
 	}
@@ -131,7 +131,8 @@ class JavawoccParserTest {
 
 		};
 		Parser parenthesesExpression = new ParenthesesParser(Type.PAREN, expression);
-		Parser statement = new SequenceParser(expression, new OneToManyParser(new TerminatorParser(), expression)) {
+		Parser statement = new SequenceParser(expression,
+				new OneToManyParser(false, new TerminatorParser(), expression)) {
 			@Override
 			protected ASTNode build(ASTNodeList node) {
 				return node;
@@ -143,9 +144,10 @@ class JavawoccParserTest {
 			}
 		};
 		Parser block = new ParenthesesParser(Type.BRACE, statement);
-		Parser ifStatement = new SequenceParser(new MatchParser(TokenType.KEYWORD,"if"), parenthesesExpression, block);
-		ASTNode node = ifStatement.parse(new Tokenizer("if(a == 3){b=5}b"));
+		Parser ifStatement = new SequenceParser(new MatchParser(TokenType.KEYWORD, "if"), parenthesesExpression, block);
+		Tokenizer tokenizer = new Tokenizer("if(a == 3){b=5}");
+		ASTNode node = ifStatement.parse(tokenizer);
 		assertNotNull(node);
-
+		assertFalse(tokenizer.hasNext());
 	}
 }

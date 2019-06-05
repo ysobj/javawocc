@@ -41,7 +41,8 @@ public class JavawoccParser implements Parser {
 		// Parser parenthesesExpression = new SequenceParser(new MatchParser("("),
 		// expression, new MatchParser(")"));
 		Parser parenthesesExpression = new ParenthesesParser(Type.PAREN, expression);
-		Parser statement = new SequenceParser(expression, new OneToManyParser(new TerminatorParser(), expression)) {
+		Parser statement = new SequenceParser(expression,
+				new OneToManyParser(false, new TerminatorParser(), expression)) {
 			@Override
 			protected ASTNode build(ASTNodeList node) {
 				return node;

@@ -5,15 +5,23 @@ import javawocc.ast.ASTNodeList;
 import javawocc.tokenizer.Tokenizer;
 
 public class OneToManyParser implements Parser {
+	boolean atlLeastOne = true;
+
 	Parser[] parsers;
 
 	public OneToManyParser(Parser... parsers) {
 		this.parsers = parsers;
 	}
 
+	public OneToManyParser(boolean atLeastOne, Parser... parsers) {
+		this.atlLeastOne = atLeastOne;
+		this.parsers = parsers;
+	}
+
 	@Override
 	public ASTNode parse(Tokenizer tokenizer) throws ParseException {
 		ASTNodeList list = new ASTNodeList();
+		boolean accepted = false;
 		try {
 			while (tokenizer.hasNext()) {
 				for (Parser parser : parsers) {
@@ -22,9 +30,10 @@ public class OneToManyParser implements Parser {
 						list.add(node);
 					}
 				}
+				accepted = true;
 			}
 		} catch (ParseException e) {
-			if (list.getNodeList().size() == 0) {
+			if (atlLeastOne && !accepted) {
 				throw e;
 			}
 		}
