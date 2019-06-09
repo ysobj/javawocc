@@ -18,7 +18,7 @@ public class JavawoccParser implements Parser {
 		// expression = factor (OPERATOR factor)
 		// parentheses_expression = "(" expression ")"
 		// block = "{" statements "}"
-		// if_statement = "if" parentheses_expression block
+		// if_statement = "if" parentheses_expression block ( "else" block )
 		// statement = expression TERMINATOR
 		// statements = statement | if_statement
 		// program = statements *
