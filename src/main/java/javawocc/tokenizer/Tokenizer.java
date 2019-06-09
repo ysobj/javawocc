@@ -165,6 +165,9 @@ public class Tokenizer {
 		if (in(string, "if")) {
 			return TokenType.KEYWORD;
 		}
+		if (in(string, "else")) {
+			return TokenType.KEYWORD;
+		}
 		if (x == '(') {
 			return TokenType.PAREN_OPEN;
 		}

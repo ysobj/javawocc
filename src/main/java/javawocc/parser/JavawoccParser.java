@@ -57,8 +57,8 @@ public class JavawoccParser implements Parser {
 		// MatchParser("}"));
 		ChoiceParser statements = new ChoiceParser();
 		Parser block = new ParenthesesParser(Type.BRACE, statement);
-		Parser ifStatement = new SequenceParser(new MatchParser(TokenType.KEYWORD, "if"), parenthesesExpression,
-				block) {
+		Parser ifStatement = new SequenceParser(new MatchParser(TokenType.KEYWORD, "if"), parenthesesExpression, block,
+				new OptionParser(new SequenceParser(new MatchParser(TokenType.KEYWORD, "else"), block))) {
 			@Override
 			protected ASTNode build(ASTNodeList node) {
 				ASTNode cond = node.getNodeList().get(1);
