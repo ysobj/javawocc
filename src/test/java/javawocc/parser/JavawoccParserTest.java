@@ -104,50 +104,26 @@ class JavawoccParserTest {
 	}
 
 	@Test
+	void testIfStatementSimple() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("if(a == 3){b=5;}"));
+		assertNotNull(node);
+		assertEquals("if((a == 3)){(b = 5)}", node.toString());
+	}
+
+	@Test
 	void testIfStatement() throws Exception {
 		JavawoccParser parser = new JavawoccParser();
-		ASTNode node = parser.parse(new Tokenizer("a = 3; b=4;if(a == 3){b=5}b"));
-//		ASTNode node = parser.parse(new Tokenizer("if(a == 3){b=5}"));
+		ASTNode node = parser.parse(new Tokenizer("a = 3; b=4;if(a == 3){b=5;}b"));
 		assertNotNull(node);
-		assertEquals("(a = 3)(b = 4)if(a == 3){b = 5}b", node.toString());
+		assertEquals("(a = 3)(b = 4)if((a == 3)){(b = 5)}b", node.toString());
 	}
 
 	@Test
 	void testIfStatement2() throws Exception {
-		Parser factor = new ChoiceParser(new NumberParser(), new IdentifierParser()) {
-			public String toString() {
-				return "factor";
-			}
-		};
-		Parser expression = new SequenceParser(factor, new OneToManyParser(new OperatorParser(), factor)) {
-
-			@Override
-			protected ASTNode build(ASTNodeList node) {
-				List<ASTNode> list = node.getNodeList();
-				list.addAll(((ASTNodeList) list.remove(1)).getNodeList());
-				OperatorPrecedenceResolver resolver = new OperatorPrecedenceResolver();
-				return resolver.resolve(list);
-			}
-
-		};
-		Parser parenthesesExpression = new ParenthesesParser(Type.PAREN, expression);
-		Parser statement = new SequenceParser(expression,
-				new OneToManyParser(false, new TerminatorParser(), expression)) {
-			@Override
-			protected ASTNode build(ASTNodeList node) {
-				return node;
-			}
-
-			@Override
-			public String toString() {
-				return "statement";
-			}
-		};
-		Parser block = new ParenthesesParser(Type.BRACE, statement);
-		Parser ifStatement = new SequenceParser(new MatchParser(TokenType.KEYWORD, "if"), parenthesesExpression, block);
-		Tokenizer tokenizer = new Tokenizer("if(a == 3){b=5}");
-		ASTNode node = ifStatement.parse(tokenizer);
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("b=4;if(a == 3){b=5;}"));
 		assertNotNull(node);
-		assertFalse(tokenizer.hasNext());
+		assertEquals("(b = 4)if((a == 3)){(b = 5)}", node.toString());
 	}
 }

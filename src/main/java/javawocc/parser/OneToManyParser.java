@@ -26,9 +26,7 @@ public class OneToManyParser implements Parser {
 			while (tokenizer.hasNext()) {
 				for (Parser parser : parsers) {
 					ASTNode node = parser.parse(tokenizer);
-					if (node != null) {
-						list.add(node);
-					}
+					list.add(node);
 				}
 				accepted = true;
 			}

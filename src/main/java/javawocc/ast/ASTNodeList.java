@@ -40,6 +40,9 @@ public class ASTNodeList extends ASTNode {
 	}
 
 	public void add(ASTNode node) {
+		if (node instanceof NullNode) {
+			return;
+		}
 		this.list.add(node);
 	}
 

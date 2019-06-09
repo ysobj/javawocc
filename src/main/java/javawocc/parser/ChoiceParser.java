@@ -36,4 +36,10 @@ public class ChoiceParser implements Parser {
 		return sb.toString();
 	}
 
+	public void add(Parser parser) {
+		Parser[] tmp = new Parser[parsers.length + 1];
+		System.arraycopy(parsers, 0, tmp, 0, parsers.length);
+		tmp[parsers.length] = parser;
+		this.parsers = tmp;
+	}
 }

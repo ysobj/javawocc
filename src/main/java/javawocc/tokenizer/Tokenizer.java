@@ -187,4 +187,12 @@ public class Tokenizer {
 	private boolean in(int obj, int... candidates) {
 		return Arrays.stream(candidates).anyMatch((c) -> obj == c);
 	}
+
+	@Override
+	public String toString() {
+		if(this.preloaded != null) {
+			return this.preloaded.getOriginal();
+		}
+		return "";
+	}
 }

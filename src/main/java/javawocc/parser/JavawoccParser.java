@@ -16,10 +16,10 @@ public class JavawoccParser implements Parser {
 		// factor = NUMBER | IDENTIFIER
 		// expression = factor (OPERATOR factor)
 		// parentheses_expression = "(" expression ")"
-		// block = "{" statement "}"
+		// block = "{" statements "}"
 		// if_statement = "if" parentheses_expression block
-		// statement = expression (TERMINATOR expression)
-		// statements = statement TERMINATOR | if_statement
+		// statement = expression TERMINATOR
+		// statements = statement | if_statement
 		// program = statements *
 
 		Parser factor = new ChoiceParser(new NumberParser(), new IdentifierParser()) {
@@ -41,8 +41,7 @@ public class JavawoccParser implements Parser {
 		// Parser parenthesesExpression = new SequenceParser(new MatchParser("("),
 		// expression, new MatchParser(")"));
 		Parser parenthesesExpression = new ParenthesesParser(Type.PAREN, expression);
-		Parser statement = new SequenceParser(expression,
-				new OneToManyParser(false, new TerminatorParser(), expression)) {
+		Parser statement = new SequenceParser(expression, new TerminatorParser()) {
 			@Override
 			protected ASTNode build(ASTNodeList node) {
 				return node;
@@ -55,9 +54,11 @@ public class JavawoccParser implements Parser {
 		};
 		// Parser block = new SequenceParser(new MatchParser("{"), statement, new
 		// MatchParser("}"));
+		ChoiceParser statements = new ChoiceParser();
 		Parser block = new ParenthesesParser(Type.BRACE, statement);
 		Parser ifStatement = new SequenceParser(new MatchParser(TokenType.KEYWORD, "if"), parenthesesExpression, block);
-		Parser statements = new ChoiceParser(new SequenceParser(statement, new TerminatorParser()), ifStatement);
+		statements.add(statement);
+		statements.add(ifStatement);
 		parser = new OneToManyParser(statements);
 	}
 
