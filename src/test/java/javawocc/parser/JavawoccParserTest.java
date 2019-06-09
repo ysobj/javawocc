@@ -1,18 +1,13 @@
 package javawocc.parser;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
 import javawocc.ast.ASTNode;
-import javawocc.ast.ASTNodeList;
-import javawocc.ast.OperatorPrecedenceResolver;
 import javawocc.model.Environment;
-import javawocc.parser.ParenthesesParser.Type;
 import javawocc.tokenizer.Tokenizer;
-import javawocc.tokenizer.Token.TokenType;
 
 class JavawoccParserTest {
 
@@ -136,8 +131,8 @@ class JavawoccParserTest {
 	@Test
 	void testIfStatement2() throws Exception {
 		JavawoccParser parser = new JavawoccParser();
-		ASTNode node = parser.parse(new Tokenizer("b=4;if(a == 3){b=5;}"));
+		ASTNode node = parser.parse(new Tokenizer("b=4;if(a == 2){b=1;}"));
 		assertNotNull(node);
-		assertEquals("(b = 4)if((a == 3)){(b = 5)}", node.toString());
+		assertEquals("(b = 4)if((a == 2)){(b = 1)}", node.toString());
 	}
 }

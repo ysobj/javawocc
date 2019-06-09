@@ -28,8 +28,7 @@ public class IfNode extends ASTNode {
 
 	@Override
 	public String toString() {
-		// TODO
-		return "if((a == 3)){(b = 5)}";
+		return String.format("if(%s){%s}", this.condition, this.block);
 	}
 
 }
