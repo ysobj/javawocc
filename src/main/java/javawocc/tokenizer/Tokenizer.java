@@ -114,10 +114,7 @@ public class Tokenizer {
 			e.printStackTrace();
 		}
 		String origin = sb.toString();
-		if ("if".equals(origin)) {
-			return new Token(origin, TokenType.KEYWORD);
-		}
-		return new Token(origin, TokenType.IDENTIFIER);
+		return new Token(origin, resolveType(origin));
 	}
 
 	private Token createNumberToken(int r, Reader is) {
@@ -162,10 +159,7 @@ public class Tokenizer {
 		if (in(string, "+", "-", "*", "/", "=", "==")) {
 			return TokenType.OPERATOR;
 		}
-		if (in(string, "if")) {
-			return TokenType.KEYWORD;
-		}
-		if (in(string, "else")) {
+		if (in(string, "if", "else")) {
 			return TokenType.KEYWORD;
 		}
 		if (x == '(') {

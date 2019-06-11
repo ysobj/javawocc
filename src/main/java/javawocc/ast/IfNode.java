@@ -38,7 +38,11 @@ public class IfNode extends ASTNode {
 
 	@Override
 	public String toString() {
-		return String.format("if(%s){%s}", this.condition, this.block);
+		if (this.elseBlock == null) {
+			return String.format("if(%s){%s}", this.condition, this.block);
+		} else {
+			return String.format("if(%s){%s}else{%s}", this.condition, this.block, this.elseBlock);
+		}
 	}
 
 }

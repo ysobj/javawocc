@@ -137,6 +137,14 @@ class JavawoccParserTest {
 	}
 
 	@Test
+	void testIfElseStatementSimple() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("if(a == 2){b=1;}else{b=3;}"));
+		assertNotNull(node);
+		assertEquals("if((a == 2)){(b = 1)}else{(b = 3)}", node.toString());
+	}
+
+	@Test
 	void testIfElseStatement() throws Exception {
 		JavawoccParser parser = new JavawoccParser();
 		ASTNode node = parser.parse(new Tokenizer("a=4;b=2;if(a == 2){b=1;}else{b=3;}"));
@@ -145,5 +153,16 @@ class JavawoccParserTest {
 		Environment env = new Environment();
 		node.evaluate(env);
 		assertEquals(3, env.get("b"));
+	}
+
+	@Test
+	void testIfElseStatement2() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("a=2;b=2;if(a == 2){b=1;}else{b=3;}"));
+		assertNotNull(node);
+		assertEquals("(a = 2)(b = 2)if((a == 2)){(b = 1)}else{(b = 3)}", node.toString());
+		Environment env = new Environment();
+		node.evaluate(env);
+		assertEquals(1, env.get("b"));
 	}
 }

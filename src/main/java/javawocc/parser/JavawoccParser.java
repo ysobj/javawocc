@@ -61,8 +61,13 @@ public class JavawoccParser implements Parser {
 				new OptionParser(new SequenceParser(new MatchParser(TokenType.KEYWORD, "else"), block))) {
 			@Override
 			protected ASTNode build(ASTNodeList node) {
-				ASTNode cond = node.getNodeList().get(1);
-				ASTNode ifs = node.getNodeList().get(2);
+				List<ASTNode> nodelist = node.getNodeList();
+				ASTNode cond = nodelist.get(1);
+				ASTNode ifs = nodelist.get(2);
+				if(nodelist.size() > 3) {
+					ASTNodeList elseNode = (ASTNodeList)nodelist.get(3);
+					return new IfNode(cond, ifs, elseNode.getNodeList().get(1));
+				}
 				return new IfNode(cond, ifs);
 			}
 		};
