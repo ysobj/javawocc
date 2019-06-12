@@ -134,6 +134,7 @@ class JavawoccParserTest {
 		ASTNode node = parser.parse(new Tokenizer("b=4;if(a == 2){b=1;}"));
 		assertNotNull(node);
 		assertEquals("(b = 4)if((a == 2)){(b = 1)}", node.toString());
+		assertEquals("", node.compile(new Environment()));
 	}
 
 	@Test

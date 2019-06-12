@@ -3,6 +3,26 @@ package javawocc.ast;
 import javawocc.model.Environment;
 
 public class EquivalentOperator implements Operator {
+	private static final int iload_0 = 26;
+	private static final int iload_1 = 27;
+	private static final int iload_2 = 28;
+	private static final int iload_3 = 29;
+	private static final int iload = 21;
+	private static final int if_icmpeq = 159;
+	private static final int if_icmpne = 160;
+	private static final int if_icmplt = 161;
+	private static final int if_icmpge = 162;
+	private static final int if_icmpgt = 163;
+	private static final int if_icmple = 164;
+	private static final int iconst_m1 = 2;
+	private static final int iconst_0 = 3;
+	private static final int iconst_1 = 4;
+	private static final int iconst_2 = 5;
+	private static final int iconst_3 = 6;
+	private static final int iconst_4 = 7;
+	private static final int iconst_5 = 8;
+	private static final int[] iconst = { iconst_0, iconst_1, iconst_2, iconst_3, iconst_4, iconst_5 };
+
 	@Override
 	public Object evaluate(Environment env, ASTNode first, ASTNode second) {
 		Object fvalue = first.evaluate(env);
@@ -18,7 +38,11 @@ public class EquivalentOperator implements Operator {
 
 	@Override
 	public String compile(Environment env, ASTNode first, ASTNode second) {
-		// TODO Auto-generated method stub
+		// left hand side should be identifier, and right hand side is a specific
+		// number.
+		Identifier left = (Identifier) first;
+		// iload index
+		NumberLiteral right = (NumberLiteral) second;
 		return null;
 	}
 

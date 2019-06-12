@@ -3,6 +3,13 @@ package javawocc.ast;
 import javawocc.model.Environment;
 
 public class IfNode extends ASTNode {
+	private static final int if_icmpeq = 159;
+	private static final int if_icmpne = 160;
+	private static final int if_icmplt = 161;
+	private static final int if_icmpge = 162;
+	private static final int if_icmpgt = 163;
+	private static final int if_icmple = 164;
+	
 	private ASTNode condition;
 	private ASTNode block;
 	private ASTNode elseBlock;
@@ -30,7 +37,7 @@ public class IfNode extends ASTNode {
 				}
 			}
 		} else {
-			// TODO should create specific Exception?
+			// TODO should throw specific Exception?
 			throw new IllegalArgumentException();
 		}
 		return new NullNode();
@@ -43,6 +50,11 @@ public class IfNode extends ASTNode {
 		} else {
 			return String.format("if(%s){%s}else{%s}", this.condition, this.block, this.elseBlock);
 		}
+	}
+
+	@Override
+	public String compile(Environment env) {
+		return this.condition.compile(env);
 	}
 
 }
