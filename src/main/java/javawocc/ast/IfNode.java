@@ -54,7 +54,10 @@ public class IfNode extends ASTNode {
 
 	@Override
 	public String compile(Environment env) {
-		return this.condition.compile(env);
+		StringBuilder sb = new StringBuilder();
+		sb.append(this.condition.compile(env));
+		sb.append(String.format("%02x", if_icmpeq));
+		return sb.toString();
 	}
 
 }

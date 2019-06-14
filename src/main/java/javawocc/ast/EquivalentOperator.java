@@ -8,6 +8,7 @@ public class EquivalentOperator implements Operator {
 	private static final int iload_2 = 28;
 	private static final int iload_3 = 29;
 	private static final int iload = 21;
+	private static final int[] iload_specific = { iload_0, iload_1, iload_2, iload_3 };
 	private static final int if_icmpeq = 159;
 	private static final int if_icmpne = 160;
 	private static final int if_icmplt = 161;
@@ -21,7 +22,7 @@ public class EquivalentOperator implements Operator {
 	private static final int iconst_3 = 6;
 	private static final int iconst_4 = 7;
 	private static final int iconst_5 = 8;
-	private static final int[] iconst = { iconst_0, iconst_1, iconst_2, iconst_3, iconst_4, iconst_5 };
+	private static final int[] iconst_specific = { iconst_0, iconst_1, iconst_2, iconst_3, iconst_4, iconst_5 };
 
 	@Override
 	public Object evaluate(Environment env, ASTNode first, ASTNode second) {
@@ -38,12 +39,17 @@ public class EquivalentOperator implements Operator {
 
 	@Override
 	public String compile(Environment env, ASTNode first, ASTNode second) {
+		StringBuilder sb = new StringBuilder();
 		// left hand side should be identifier, and right hand side is a specific
 		// number.
 		Identifier left = (Identifier) first;
 		// iload index
+		sb.append(String.format("%02x", iload_specific[env.getIndex(left.getExpression())]));
 		NumberLiteral right = (NumberLiteral) second;
-		return null;
+		// iconst_x
+		Number rvalue = (Number) right.evaluate(env);
+		sb.append(String.format("%02x", iconst_specific[rvalue.intValue()]));
+		return sb.toString();
 	}
 
 	@Override

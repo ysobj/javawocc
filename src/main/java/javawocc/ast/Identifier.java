@@ -27,6 +27,10 @@ public class Identifier extends ASTNode {
 		int ind = istore0 + env.getIndex(token.getOriginal());
 		return String.format("%02x", ind);
 	}
+	
+	public String getExpression() {
+		return token.getOriginal();
+	}
 
 	@Override
 	public String toString() {
