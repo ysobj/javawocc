@@ -23,4 +23,9 @@ public class OptionParser implements Parser {
 		return new NullNode();
 	}
 
+	@Override
+	public String toString() {
+		return "(" + this.parser.toString() + ")";
+	}
+
 }

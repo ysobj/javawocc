@@ -166,7 +166,7 @@ class JavawoccParserTest {
 		node.evaluate(env);
 		assertEquals(1, env.get("b"));
 	}
-	
+
 	@Test
 	void testWhileStatement() throws Exception {
 		JavawoccParser parser = new JavawoccParser();
@@ -176,6 +176,16 @@ class JavawoccParserTest {
 		Environment env = new Environment();
 		node.evaluate(env);
 		assertEquals(5, env.get("a"));
-		
+	}
+
+	@Test
+	void testReturn() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("return 1;"));
+		assertNotNull(node);
+		assertEquals("return1", node.toString());
+		node = parser.parse(new Tokenizer("return a;"));
+		assertNotNull(node);
+		assertEquals("returna", node.toString());
 	}
 }
