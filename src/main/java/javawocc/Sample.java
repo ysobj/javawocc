@@ -105,6 +105,7 @@ public class Sample {
 		bytes += sourceFileAttribute.toString();
 		OutputStream os = new FileOutputStream(args[0] + "/javawocc/HelloWorld.class");
 		os.write(decode(bytes));
+		os.flush();
 		os.close();
 	}
 
