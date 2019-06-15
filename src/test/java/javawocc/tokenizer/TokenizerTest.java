@@ -191,6 +191,54 @@ class TokenizerTest {
 	}
 
 	@Test
+	void testReturn() {
+		Tokenizer tokenizer = new Tokenizer("a=0;return a;");
+		assertTrue(tokenizer.hasNext());
+		Token token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("a", token.getOriginal());
+		assertEquals(TokenType.IDENTIFIER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("=", token.getOriginal());
+		assertEquals(TokenType.OPERATOR, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("0", token.getOriginal());
+		assertEquals(TokenType.NUMBER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals(";", token.getOriginal());
+		assertEquals(TokenType.TERMINATOR, token.getType());
+
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("return", token.getOriginal());
+		assertEquals(TokenType.KEYWORD, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals("a", token.getOriginal());
+		assertEquals(TokenType.IDENTIFIER, token.getType());
+		//
+		assertTrue(tokenizer.hasNext());
+		token = tokenizer.next();
+		assertNotNull(token);
+		assertEquals(";", token.getOriginal());
+		assertEquals(TokenType.TERMINATOR, token.getType());
+
+	}
+
+	@Test
 	void testWhile() {
 		Tokenizer tokenizer = new Tokenizer("a=0;while(a < 5){ a = a + 1;}");
 

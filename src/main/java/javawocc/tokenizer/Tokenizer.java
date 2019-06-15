@@ -160,7 +160,7 @@ public class Tokenizer {
 		if (in(string, "+", "-", "*", "/", "=", "<", "==")) {
 			return TokenType.OPERATOR;
 		}
-		if (in(string, "if", "else", "while")) {
+		if (in(string, "if", "else", "while", "return")) {
 			return TokenType.KEYWORD;
 		}
 		if (x == '(') {
