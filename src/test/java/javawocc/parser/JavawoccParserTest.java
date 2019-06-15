@@ -166,4 +166,13 @@ class JavawoccParserTest {
 		node.evaluate(env);
 		assertEquals(1, env.get("b"));
 	}
+
+	@Test
+	void testWhileStatement() throws Exception {
+		JavawoccParser parser = new JavawoccParser();
+		ASTNode node = parser.parse(new Tokenizer("a=0;while(a < 5){ a = a + 1;}"));
+		assertNotNull(node);
+		assertEquals("(a = 0)while((a < 5)){(a = (a + 1))}", node.toString());
+
+	}
 }

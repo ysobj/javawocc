@@ -58,6 +58,7 @@ public class Tokenizer {
 				case '-':
 				case '*':
 				case '/':
+				case '<':
 					return createToken("" + (char) r);
 				case '=':
 					is.mark(1);
@@ -156,10 +157,10 @@ public class Tokenizer {
 		if (x == ';') {
 			return TokenType.TERMINATOR;
 		}
-		if (in(string, "+", "-", "*", "/", "=", "==")) {
+		if (in(string, "+", "-", "*", "/", "=", "<", "==")) {
 			return TokenType.OPERATOR;
 		}
-		if (in(string, "if", "else")) {
+		if (in(string, "if", "else", "while")) {
 			return TokenType.KEYWORD;
 		}
 		if (x == '(') {
@@ -187,7 +188,7 @@ public class Tokenizer {
 
 	@Override
 	public String toString() {
-		if(this.preloaded != null) {
+		if (this.preloaded != null) {
 			return this.preloaded.getOriginal();
 		}
 		return "";

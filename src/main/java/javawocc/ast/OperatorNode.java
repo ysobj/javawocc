@@ -9,26 +9,29 @@ public class OperatorNode extends ASTNode {
 	public OperatorNode(Token token) {
 		super(token);
 		switch (token.getOriginal()) {
-			case "+":
-				this.operator = new PlusOperator();
-				break;
-			case "-":
-				this.operator = new MinusOperator();
-				break;
-			case "*":
-				this.operator = new MultiplyOperator();
-				break;
-			case "/":
-				this.operator = new DivideOperator();
-				break;
-			case "=":
-				this.operator = new AssignOperator();
-				break;
-			case "==":
-				this.operator = new EquivalentOperator();
-				break;
-			default:
-				operator = null;
+		case "+":
+			this.operator = new PlusOperator();
+			break;
+		case "-":
+			this.operator = new MinusOperator();
+			break;
+		case "*":
+			this.operator = new MultiplyOperator();
+			break;
+		case "/":
+			this.operator = new DivideOperator();
+			break;
+		case "=":
+			this.operator = new AssignOperator();
+			break;
+		case "<":
+			this.operator = new LessOperator();
+			break;
+		case "==":
+			this.operator = new EquivalentOperator();
+			break;
+		default:
+			operator = null;
 		}
 	}
 

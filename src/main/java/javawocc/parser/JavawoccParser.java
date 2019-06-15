@@ -6,6 +6,7 @@ import javawocc.ast.ASTNode;
 import javawocc.ast.ASTNodeList;
 import javawocc.ast.IfNode;
 import javawocc.ast.OperatorPrecedenceResolver;
+import javawocc.ast.WhileNode;
 import javawocc.parser.ParenthesesParser.Type;
 import javawocc.tokenizer.Tokenizer;
 import javawocc.tokenizer.Token.TokenType;
@@ -19,8 +20,9 @@ public class JavawoccParser implements Parser {
 		// parentheses_expression = "(" expression ")"
 		// block = "{" statements "}"
 		// if_statement = "if" parentheses_expression block ( "else" block )
+		// while_statement = "while" parentheses_expression block
 		// statement = expression TERMINATOR
-		// statements = statement | if_statement
+		// statements = statement | if_statement | while_statement
 		// program = statements *
 
 		Parser factor = new ChoiceParser(new NumberParser(), new IdentifierParser()) {
@@ -64,15 +66,26 @@ public class JavawoccParser implements Parser {
 				List<ASTNode> nodelist = node.getNodeList();
 				ASTNode cond = nodelist.get(1);
 				ASTNode ifs = nodelist.get(2);
-				if(nodelist.size() > 3) {
-					ASTNodeList elseNode = (ASTNodeList)nodelist.get(3);
+				if (nodelist.size() > 3) {
+					ASTNodeList elseNode = (ASTNodeList) nodelist.get(3);
 					return new IfNode(cond, ifs, elseNode.getNodeList().get(1));
 				}
 				return new IfNode(cond, ifs);
 			}
 		};
+		Parser whileStatement = new SequenceParser(new MatchParser(TokenType.KEYWORD, "while"), parenthesesExpression,
+				block) {
+			@Override
+			protected ASTNode build(ASTNodeList node) {
+				List<ASTNode> nodelist = node.getNodeList();
+				ASTNode cond = nodelist.get(1);
+				ASTNode whiles = nodelist.get(2);
+				return new WhileNode(cond, whiles);
+			}
+		};
 		statements.add(statement);
 		statements.add(ifStatement);
+		statements.add(whileStatement);
 		parser = new OneToManyParser(statements);
 	}
 
