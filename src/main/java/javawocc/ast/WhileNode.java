@@ -1,5 +1,7 @@
 package javawocc.ast;
 
+import javawocc.model.Environment;
+
 public class WhileNode extends ASTNode {
 	private ASTNode condition;
 	private ASTNode block;
@@ -8,6 +10,14 @@ public class WhileNode extends ASTNode {
 		super(null);
 		this.condition = condition;
 		this.block = block;
+	}
+
+	@Override
+	public Object evaluate(Environment env) {
+		while((Boolean)this.condition.evaluate(env)) {
+			this.block.evaluate(env);
+		}
+		return new NullNode();
 	}
 
 	@Override
