@@ -22,6 +22,6 @@ class InstructionSetListTest {
 				0x1b, //
 				(byte) 0xac//
 		};
-		assertEquals(expected, list.assemble());
+		assertArrayEquals(expected, list.assemble());
 	}
 }
