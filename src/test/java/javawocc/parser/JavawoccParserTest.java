@@ -184,8 +184,12 @@ class JavawoccParserTest {
 		ASTNode node = parser.parse(new Tokenizer("return 1;"));
 		assertNotNull(node);
 		assertEquals("return1", node.toString());
-		node = parser.parse(new Tokenizer("return a;"));
+		Environment env = new Environment();
+		Object retVal = node.evaluate(env);
+		assertEquals(1, retVal);
+		node = parser.parse(new Tokenizer("a = 5; b = 8; return a;"));
 		assertNotNull(node);
-		assertEquals("returna", node.toString());
+		assertEquals("(a = 5)(b = 8)returna", node.toString());
+		assertEquals(5, node.evaluate(new Environment()));
 	}
 }
